@@ -1,0 +1,75 @@
+﻿@{
+    ViewData["Title"] = "ForkScore - Home";
+    bool isLoggedIn;
+    int userID;
+    string userName;
+
+    if (ViewBag.IsLoggedIn)
+    {
+        isLoggedIn = true;
+        userID = ViewBag.UserID;
+        userName = ViewBag.UserName;
+    }
+    else
+    {
+        isLoggedIn = false;
+    }
+}
+
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <title>@ViewData["Title"]</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+    </head>
+    <body>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div class="container">
+                <a class="navbar-brand" asp-controller="Home" asp-action="Index">Restaurant Reviews</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        @if (isLoggedIn)
+                        {
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle text-light" href="#" role="button" data-bs-toggle="dropdown">
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" asp-controller="Restaurant" asp-action="Search">Find Restaurants</a></li>
+                                    <li><a class="dropdown-item" asp-controller="Reservation" asp-action="Make">Make Reservation</a></li>
+                                    {
+                                        <li><a class="dropdown-item" asp-controller="Review" asp-action="Create">Create Review</a></li>
+                                        <li><a class="dropdown-item" asp-controller="Review" asp-action="Manage">Manage Reviews</a></li>
+                                    }
+                                    {
+                                        <li><a class="dropdown-item" asp-controller="Restaurant" asp-action="Add">Add Restaurant</a></li>
+                                        <li><a class="dropdown-item" asp-controller="Reservation" asp-action="Manage">Manage Reservations</a></li>
+                                    }
+                                    <li><hr class="dropdown-divider" /></li>
+                                    <li><a class="dropdown-item" asp-controller="Home" asp-action="Logout">Logout</a></li>
+                                </ul>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="nav-item">
+                                <a class="btn btn-outline-light me-2" asp-controller="Auth" asp-action="Login">Login</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="btn btn-primary" asp-controller="Auth" asp-action="Register">Register</a>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <div class="container text-center mt-4">
+            <h1>Welcome to Restaurant Reviews</h1>
+            <p>Find and review the best restaurants in your area!</p>
+            <a class="btn btn-primary mt-3" asp-controller="Restaurant" asp-action="Search">Find Restaurants</a>
+        </div>
+    </body>
+    </html>
