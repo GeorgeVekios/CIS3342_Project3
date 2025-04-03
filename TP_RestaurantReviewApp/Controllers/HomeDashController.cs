@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using TP_RestaurantReviewApp.Models
 
 namespace TP_RestaurantReviewApp.Controllers
 {
@@ -7,12 +8,6 @@ namespace TP_RestaurantReviewApp.Controllers
         public IActionResult Index()
         {
             
-        }
-
-        public IActionResult Logout()
-        {
-            HttpContext.Session.Clear();
-            return RedirectToAction("Index");
         }
     }
 }

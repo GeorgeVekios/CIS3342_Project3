@@ -1,0 +1,63 @@
+@model TP_RestaurantReviewApp.Models.Restaurant
+
+@{
+    Layout = null;
+    ViewData["Title"] = "ForkScore - Restaurant Profile";
+}
+
+<DOCTYPE html>
+<html>
+<head>
+    <title>@ViewData["Title"]</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="mb-4">@Model.name's Profile</h1>
+
+        <div class="row">
+            <div class="col-md-6">
+                <h4>Restaurant Details</h4>
+                <ul class="list-group">
+                    <li class="list-group-item"><strong>Cuisine:</strong> @Model.cuisine</li>
+                    <li class="list-group-item"><strong>Address:</strong> @Model.streetAddress, @Model.city, @Model.state, @Model.zipCode</li>
+                    <li class="list-group-item"><strong>Phone:</strong> @Model.phoneNum</li>
+                    <li class="list-group-item"><strong>Email:</strong> @Model.email</li>
+                    <li class="list-group-item"><strong>Website:</strong> <a href="@Model.websiteURL" target="_blank">@Model.websiteURL</a></li>
+                </ul>
+            </div>
+
+            <div class="col-md-6">
+                <h4>Restaurant Ratings</h4>
+                <ul class="list-group">
+                    <li class="list-group-item"><strong>Overall Rating:</strong> @Model.overallRating</li>
+                    <li class="list-group-item"><strong>Food Rating:</strong> @Model.avgFoodRating</li>
+                    <li class="list-group-item"><strong>Service Rating:</strong> @Model.avgServiceRating</li>
+                    <li class="list-group-item"><strong>Atmosphere Rating:</strong> @Model.avgAtmosphereRating</li>
+                    <li class="list-group-item"><strong>Price Rating:</strong> @Model.avgPriceRating</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="row mt-4">
+            <div class="col-md-12">
+                <h4>Hours of Operation</h4>
+                <p>@Model.hoursOfOperation</p>
+            </div>
+        </div>
+
+        <div class="row mt-4">
+            <div class="col-md-12">
+                <h4>Description</h4>
+                <p>@Model.description</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+</body>
+</html>
+</DOCTYPE>
