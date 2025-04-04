@@ -123,12 +123,16 @@
             set { avgPriceRating = value; }
         }
 
-        private string WebsiteURL
+        public string WebsiteURL
         {
             get { return websiteURL; }
             set { websiteURL = value; }
         }
 
+        public Restaurant()
+        {
+
+        }
         public Restaurant(int ownerID, string name, string cuisine, string streetAddress, string city, string state, int zipCode,
                           string hoursOfOperation, string email, string phoneNum, string description, double overallRating,
                           double avgFoodRating, double avgAtmosphereRating, double avgServiceRating, double avgPriceRating, string websiteURL)

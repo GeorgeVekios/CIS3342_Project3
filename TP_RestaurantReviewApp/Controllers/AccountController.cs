@@ -1,11 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using TP_RestaurantReviewApp.Models;
+using System.Data.SqlClient;
 
 namespace TP_RestaurantReviewApp.Controllers
 {
-    public class HomeDashController : Controller
+    public class AccountController : Controller
     {
-        public IActionResult Index()
+        public IActionResult Register()
         {
             return View();
         }
