@@ -8,7 +8,7 @@ namespace TP_RestaurantReviewApp.Controllers
 {
     public class RestaurantController : Controller
     {
-        [HttpGet("Restaurants/ViewRestaurantProfile/{id}")]
+        [HttpGet("Restaurant/ViewRestaurantProfile/{id}")]
         // route: Restaurants/ViewRestaurantProfile/id
         public IActionResult ViewRestaurantProfile(int id)
         {

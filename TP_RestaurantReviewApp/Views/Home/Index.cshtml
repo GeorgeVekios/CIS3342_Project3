@@ -23,14 +23,10 @@
                                 <ul class="dropdown-menu">
                                     <li><a class="dropdown-item" asp-controller="Restaurant" asp-action="Search">Find Restaurants</a></li>
                                     <li><a class="dropdown-item" asp-controller="Reservation" asp-action="Make">Make Reservation</a></li>
-                                    {
-                                        <li><a class="dropdown-item" asp-controller="Review" asp-action="Create">Create Review</a></li>
-                                        <li><a class="dropdown-item" asp-controller="Review" asp-action="Manage">Manage Reviews</a></li>
-                                    }
-                                    {
-                                        <li><a class="dropdown-item" asp-controller="Restaurant" asp-action="Add">Add Restaurant</a></li>
-                                        <li><a class="dropdown-item" asp-controller="Reservation" asp-action="Manage">Manage Reservations</a></li>
-                                    }
+                                    <li><a class="dropdown-item" asp-controller="Review" asp-action="Create">Create Review</a></li>
+                                    <li><a class="dropdown-item" asp-controller="Review" asp-action="Manage">Manage Reviews</a></li>
+                                    <li><a class="dropdown-item" asp-controller="Restaurant" asp-action="Add">Add Restaurant</a></li>
+                                    <li><a class="dropdown-item" asp-controller="Reservation" asp-action="Manage">Manage Reservations</a></li>
                                     <li><hr class="dropdown-divider" /></li>
                                     <li><a class="dropdown-item" asp-controller="Home" asp-action="Logout">Logout</a></li>
                                 </ul>
@@ -42,7 +38,7 @@
         </nav>
 
         <div class="container text-center mt-4">
-            <h1>Welcome to Restaurant Reviews</h1>
+            <h1>Welcome to ForkScore !</h1>
             <p>Find and review the best restaurants in your area!</p>
             <a class="btn btn-primary mt-3" asp-controller="Restaurant" asp-action="Search">Find Restaurant</a>
         </div>
