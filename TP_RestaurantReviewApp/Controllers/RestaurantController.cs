@@ -8,7 +8,7 @@ namespace TP_RestaurantReviewApp.Controllers
 {
     public class RestaurantController : Controller
     {
-        // [HttpGet("Restaurants/ViewRestaurantProfile/{id}")]
+        [HttpGet("Restaurants/ViewRestaurantProfile/{id}")]
         // route: Restaurants/ViewRestaurantProfile/id
         public IActionResult ViewRestaurantProfile(int id)
         {
@@ -17,9 +17,9 @@ namespace TP_RestaurantReviewApp.Controllers
 
             SqlCommand cmd = new SqlCommand();
             cmd.CommandType = CommandType.StoredProcedure;
-            command.CommandText = "TP_GetRestaurantByID";
+            cmd.CommandText = "TP_GetRestaurantByID";
 
-            command.Parameters.AddWithValue("@RestaurantID", id);
+            cmd.Parameters.AddWithValue("@RestaurantID", id);
 
             DataSet ds = dBConnect.GetDataSetUsingCmdObj(cmd);
 
@@ -27,24 +27,24 @@ namespace TP_RestaurantReviewApp.Controllers
             {
                 DataRow record = ds.Tables[0].Rows[0];
 
-                restaurant.restaurantID = Convert.ToInt32(record["RestaurantID"]);
-                restaurant.ownerID = Convert.ToInt32(record["OwnerID"]);
-                restaurant.name = record["Name"].ToString();
-                restaurant.cuisine = record["Cuisine"].ToString();
-                restaurant.streetAddress = record["StreetAddress"].ToString();
-                restaurant.city = record["City"].ToString();
-                restaurant.state = record["State"].ToString();
-                restaurant.zipCode = Convert.ToInt32(record["ZipCode"]);
-                restaurant.hoursOfOperation = record["HoursOfOperation"].ToString();
-                restaurant.email = record["Email"].ToString();
-                restaurant.phoneNum = record["PhoneNumber"].ToString();
-                restaurant.description = record["Description"].ToString();
-                restaurant.overallRating = Convert.ToDouble(record["OverallRating"]);
-                restaurant.avgFoodRating = Convert.ToDouble(record["AvgFoodRating"]);
-                restaurant.avgServiceRating = Convert.ToDouble(record["AvgServiceRating"]);
-                restaurant.avgAtmosphereRating = Convert.ToDouble(record["AvgAtmosphereRating"]);
-                restaurant.avgPriceRating = Convert.ToDouble(record["AvgPriceRating"]);
-                restaurant.websiteURL = record["WebsiteURL"].ToString();
+                restaurant.RestaurantID = Convert.ToInt32(record["RestaurantID"]);
+                restaurant.OwnerID = Convert.ToInt32(record["OwnerID"]);
+                restaurant.Name = record["Name"].ToString();
+                restaurant.Cuisine = record["Cuisine"].ToString();
+                restaurant.StreetAddress = record["StreetAddress"].ToString();
+                restaurant.City = record["City"].ToString();
+                restaurant.State = record["State"].ToString();
+                restaurant.ZipCode = Convert.ToInt32(record["ZipCode"]);
+                restaurant.HoursOfOperation = record["HoursOfOperation"].ToString();
+                restaurant.Email = record["Email"].ToString();
+                restaurant.PhoneNum = record["PhoneNumber"].ToString();
+                restaurant.Description = record["Description"].ToString();
+                restaurant.OverallRating = Convert.ToDouble(record["OverallRating"]);
+                restaurant.AvgFoodRating = Convert.ToDouble(record["AvgFoodRating"]);
+                restaurant.AvgServiceRating = Convert.ToDouble(record["AvgServiceRating"]);
+                restaurant.AvgAtmosphereRating = Convert.ToDouble(record["AvgAtmosphereRating"]);
+                restaurant.AvgPriceRating = Convert.ToDouble(record["AvgPriceRating"]);
+                restaurant.WebsiteURL = record["WebsiteURL"].ToString();
             }
             return View(restaurant);
         }

@@ -10,12 +10,5 @@ namespace TP_RestaurantReviewApp.Controllers
         {
             return View();
         }
-
-        [HttpPost]
-        public IActionResult Register (User user)
-        {
-
-        }
-
     }
 }

@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using TP_RestaurantReviewApp.Models
+using TP_RestaurantReviewApp.Models;
 
 namespace TP_RestaurantReviewApp.Controllers
 {
@@ -7,7 +7,7 @@ namespace TP_RestaurantReviewApp.Controllers
     {
         public IActionResult Index()
         {
-            
+            return View();
         }
     }
 }

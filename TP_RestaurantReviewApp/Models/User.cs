@@ -52,6 +52,7 @@ public class User
 	{
 		get { return phoneNum; }
 		set { phoneNum = value; }
+	}
 
 	public User()
 	{
