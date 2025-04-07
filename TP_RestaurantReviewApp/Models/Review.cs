@@ -3,6 +3,6 @@
     public class Review
     {
         private int reviewID;
-        private string 
+        private string reviewBody;
     }
 }
