@@ -48,5 +48,51 @@ namespace TP_RestaurantReviewApp.Controllers
             }
             return View(restaurant);
         }
+
+        [HttpGet("Restaurant/CreateRestaurantPage/")]
+        public IActionResult CreateRestaurantPage()
+        {
+            return View(new Restaurant());
+        }
+
+        [HttpPost]
+        public IActionResult CreateRestaurantPage(Restaurant restaurant, int userID)
+        {
+            try
+            {
+                DBConnect dBConnect = new DBConnect();
+                SqlCommand cmd = new SqlCommand();
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "TP_CreateRestaurantByUserID";
+
+                //add parameters
+
+                cmd.Parameters.AddWithValue("@OwnerID", userID);
+                cmd.Parameters.AddWithValue("@Name", restaurant.Name);
+                cmd.Parameters.AddWithValue("@Cuisine", restaurant.Cuisine);
+                cmd.Parameters.AddWithValue("@StreetAddress", restaurant.StreetAddress);
+                cmd.Parameters.AddWithValue("@City", restaurant.City);
+                cmd.Parameters.AddWithValue("@State", restaurant.State);
+                cmd.Parameters.AddWithValue("@ZipCode", restaurant.ZipCode);
+                cmd.Parameters.AddWithValue("@HoursOfOperation", restaurant.HoursOfOperation);
+                cmd.Parameters.AddWithValue("@Email", restaurant.Email);
+                cmd.Parameters.AddWithValue("@PhoneNumber", restaurant.PhoneNum);
+                cmd.Parameters.AddWithValue("@Description", restaurant.Description);
+                cmd.Parameters.AddWithValue("@WebsiteURL", restaurant.WebsiteURL);
+
+
+                dBConnect.DoUpdateUsingCmdObj(cmd);
+
+                ViewBag.Message = "Restaurant added successfully!";
+
+                // Reset form
+                return View(new Restaurant()); 
+            }
+            catch (Exception ex)
+            {
+                ViewBag.Message = $"Error adding restaurant: {ex.Message}";
+                return View(restaurant);
+            }
+        }
     }
 }

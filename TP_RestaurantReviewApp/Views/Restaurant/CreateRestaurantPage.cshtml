@@ -1,0 +1,111 @@
+﻿@model TP_RestaurantReviewApp.Models.Restaurant
+@{
+	Layout = null;
+	ViewData["Title"] = "ForkScore - Create New Restaurant";
+}
+<DOCTYPE html>
+    <html>
+    <head>
+        <title>@ViewData["Title"]</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    </head>
+	<body>
+		<div class="container">
+			<h2>Create a New Restaurant</h2>
+
+			@using (Html.BeginForm("CreateRestaurantPage", "Restaurants", FormMethod.Post))
+			{
+				<div class="form-group">
+					@Html.LabelFor(m => m.Name, "Restaurant Name")
+					@Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
+				</div>
+
+				<div class="form-group">
+					@Html.LabelFor(m => m.StreetAddress, "Address Line 1")
+					@Html.TextBoxFor(m => m.StreetAddress, new { @class = "form-control" })
+				</div>
+
+				<div class="form-group">
+					@Html.LabelFor(m => m.City, "City")
+					@Html.TextBoxFor(m => m.City, new { @class = "form-control" })
+				</div>
+
+				<div class="form-group">
+					@Html.LabelFor(m => m.State, "State")
+					@Html.DropDownListFor(m => m.State, new SelectList(new[]
+										{
+				new SelectListItem { Text = "PA", Value = "PA" },
+				new SelectListItem { Text = "NY", Value = "NY" }
+				}, "Value", "Text"), "Select State", new { @class = "form-control" })
+				</div>
+
+				<div class="form-group">
+					@Html.LabelFor(m => m.ZipCode, "Zip Code")
+					@Html.TextBoxFor(m => m.ZipCode, new { @class = "form-control" })
+				</div>
+
+				<div class="form-group">
+					@Html.LabelFor(m => m.Cuisine, "Cuisine")
+					@Html.DropDownListFor(m => m.Cuisine, new SelectList(new[]
+										{
+				new SelectListItem { Text = "Italian", Value = "Italian" },
+				new SelectListItem { Text = "Mexican", Value = "Mexican" },
+				new SelectListItem { Text = "American Grill", Value = "American Grill" }
+				}, "Value", "Text"), "Select Cuisine", new { @class = "form-control" })
+				</div>
+
+				<div class="form-group">
+					@Html.LabelFor(m => m.HoursOfOperation, "Hours of Operation")
+					@Html.TextAreaFor(m => m.HoursOfOperation, new { @class = "form-control", rows = "3" })
+				</div>
+
+				<div class="form-group">
+					@Html.LabelFor(m => m.PhoneNum, "Phone Number")
+					@Html.TextBoxFor(m => m.PhoneNum, new { @class = "form-control", type = "tel" })
+				</div>
+
+				<div class="form-group">
+					@Html.LabelFor(m => m.Email, "Email")
+					@Html.TextBoxFor(m => m.Email, new { @class = "form-control", type = "email" })
+				</div>
+
+				@* ownerName to be added later *@
+				@* <div class="form-group">
+                @Html.LabelFor(m => m., "Owner Name")
+                @Html.TextBoxFor(m => m.Owner, new { @class = "form-control" })
+            </div> *@
+
+				<div class="form-group">
+					@Html.LabelFor(m => m.WebsiteURL, "Website URL")
+					@Html.TextBoxFor(m => m.WebsiteURL, new { @class = "form-control", type = "url" })
+				</div>
+
+				@* social media to be handled later *@
+				@* <div class="form-group">
+                @Html.LabelFor(m => m.Social, "Social Media URL")
+                @Html.TextBoxFor(m => m.Social, new { @class = "form-control", type = "url" })
+            </div> *@
+
+				<div class="form-group">
+					@Html.LabelFor(m => m.Description, "Marketing Description")
+					@Html.TextAreaFor(m => m.Description, new { @class = "form-control", rows = "5" })
+				</div>
+
+				<div class="form-group text-center">
+					<button type="submit" class="btn btn-primary">Create Restaurant</button>
+				</div>
+
+				@if (ViewBag.Message != null)
+				{
+					<div class="text-center">
+						<span class="text-danger">@ViewBag.Message</span>
+					</div>
+				}
+			}
+		</div>
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+	</body>
+</html>
+</DOCTYPE>
