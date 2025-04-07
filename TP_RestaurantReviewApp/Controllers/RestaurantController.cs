@@ -3,13 +3,14 @@ using TP_RestaurantReviewApp.Models;
 using System.Data;
 using System.Data.SqlClient;
 using Utilities;
+using System.Diagnostics;
 
 namespace TP_RestaurantReviewApp.Controllers
 {
     public class RestaurantController : Controller
     {
         [HttpGet("Restaurant/ViewRestaurantProfile/{id}")]
-        // route: Restaurants/ViewRestaurantProfile/id
+        // route: Restaurant/ViewRestaurantProfile/id
         public IActionResult ViewRestaurantProfile(int id)
         {
             Restaurant restaurant = new Restaurant();
@@ -50,32 +51,101 @@ namespace TP_RestaurantReviewApp.Controllers
         }
 
         [HttpGet("Restaurant/SearchRestaurants")]
+        // route: Restaurant/SearchRestaurants
         public IActionResult SearchRestaurants(string city, string state, List<string> cuisines)
         {
-            bool isSearch = !string.IsNullOrEmpty(city) || !string.IsNullOrEmpty(state) || (cuisines != null && cuisines.Any());
+            Debug.WriteLine($"Received city: '{city}'");
+            Debug.WriteLine($"Received state: '{state}'");
+            Debug.WriteLine($"Received cuisines: '{string.Join(",", cuisines ?? new List<string>())}'");
+            string cleanCity;
+            string cleanState;
+
+            if (string.IsNullOrWhiteSpace(city))
+            {
+                cleanCity = null;
+                Debug.WriteLine("City input is null or whitespace");
+            }
+            else
+            {
+                cleanCity = city.Trim();
+                Debug.WriteLine($"City input after trim: '{cleanCity}'");
+            }
+
+            if (string.IsNullOrWhiteSpace(state))
+            {
+                cleanState = null;
+                Debug.WriteLine("State input is null or whitespace");
+            }
+            else
+            {
+                cleanState = state.Trim();
+                Debug.WriteLine($"State input after trim: '{cleanState}'");
+            }
+
+            bool isSearch = !string.IsNullOrEmpty(cleanCity) || !string.IsNullOrEmpty(cleanState) || (cuisines != null && cuisines.Any());
+            Debug.WriteLine($"IsSearch: {isSearch}");
             List<Restaurant> restaurantList = new List<Restaurant>();
 
             if (isSearch)
             {
-                string cuisineList = "";
+                string cuisineList = null;
 
-                if (cuisines != null)
+                if (cuisines != null && cuisines.Count > 0)
                 {
                     cuisineList = string.Join(",", cuisines);
+                    Debug.WriteLine($"Cuisine list: '{cuisineList}'");
+                } 
+                else
+                {
+                    cuisineList = null;
+                    Debug.WriteLine("No cuisines provided");
                 }
 
                 DBConnect dBConnect = new DBConnect();
                 SqlCommand cmd = new SqlCommand();
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.CommandText = "TP_SearchRestaurants";
-                cmd.Parameters.AddWithValue("@City", city);
-                cmd.Parameters.AddWithValue("@State", state);
-                cmd.Parameters.AddWithValue("@CuisineList", cuisineList);
+
+                if (cleanCity == null)
+                {
+                    cmd.Parameters.AddWithValue("@City", DBNull.Value);
+                    Debug.WriteLine("Passing DBNull.Value for @City");
+                }
+                else
+                {
+                    cmd.Parameters.AddWithValue("@City", cleanCity);
+                    Debug.WriteLine($"Passing @City: '{cleanCity}'");
+                }
+
+                if (cleanState == null)
+                {
+                    cmd.Parameters.AddWithValue("@State", DBNull.Value);
+                    Debug.WriteLine("Passing DBNull.Value for @State");
+                }
+                else
+                {
+                    cmd.Parameters.AddWithValue("@State", cleanState);
+                    Debug.WriteLine($"Passing @State: '{cleanState}'");
+
+                }
+
+                if (cuisineList == null)
+                {
+                    cmd.Parameters.AddWithValue("@CuisineList", DBNull.Value);
+                    Debug.WriteLine("Passing DBNull.Value for @CuisineList");
+                }
+                else
+                {
+                    cmd.Parameters.AddWithValue("@CuisineList", cuisineList);
+                    Debug.WriteLine($"Passing @CuisineList: '{cuisineList}'");
+                }
 
                 DataSet ds = dBConnect.GetDataSetUsingCmdObj(cmd);
+                Debug.WriteLine($"Rows returned from database: {ds.Tables[0].Rows.Count}");
 
                 foreach (DataRow record in ds.Tables[0].Rows)
                 {
+                    Debug.WriteLine($"Found restaurant: {record["Name"]} in {record["City"]}, {record["State"]}");
                     Restaurant restaurant = new Restaurant();
 
                     restaurant.RestaurantID = Convert.ToInt32(record["RestaurantID"]);
@@ -102,6 +172,7 @@ namespace TP_RestaurantReviewApp.Controllers
             }
             else
             {
+                Debug.WriteLine("No search parameters provided, using TP_GetAllRestaurants");
                 DBConnect dBConnect = new DBConnect();
 
                 SqlCommand cmd = new SqlCommand();
@@ -137,6 +208,7 @@ namespace TP_RestaurantReviewApp.Controllers
                 }
             }
             ViewBag.Cuisines = GetAllCuisines();
+            Debug.WriteLine($"Returning {restaurantList.Count} restaurants to view");
             return View("SearchRestaurants", restaurantList);
         }
 
