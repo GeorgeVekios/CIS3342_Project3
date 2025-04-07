@@ -230,5 +230,46 @@ namespace TP_RestaurantReviewApp.Controllers
             }
             return cuisines;
         }
+        [HttpGet]
+        public IActionResult CreateRestaurantPage()
+        {
+            return View(new Restaurant());
+        }
+
+        [HttpPost]
+        public IActionResult CreateRestaurantPage(Restaurant restaurant)
+        {
+            try
+            {
+                DBConnect dBConnect = new DBConnect();
+                SqlCommand cmd = new SqlCommand();
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "TP_AddRestaurant"; // Assuming this is your stored procedure name
+
+                cmd.Parameters.AddWithValue("@OwnerID", restaurant.OwnerID); // You might need to set this from context/user
+                cmd.Parameters.AddWithValue("@Name", restaurant.Name);
+                cmd.Parameters.AddWithValue("@Cuisine", restaurant.Cuisine);
+                cmd.Parameters.AddWithValue("@StreetAddress", restaurant.StreetAddress);
+                cmd.Parameters.AddWithValue("@City", restaurant.City);
+                cmd.Parameters.AddWithValue("@State", restaurant.State);
+                cmd.Parameters.AddWithValue("@ZipCode", restaurant.ZipCode);
+                cmd.Parameters.AddWithValue("@HoursOfOperation", restaurant.HoursOfOperation);
+                cmd.Parameters.AddWithValue("@Email", restaurant.Email);
+                cmd.Parameters.AddWithValue("@PhoneNumber", restaurant.PhoneNum);
+                cmd.Parameters.AddWithValue("@Description", restaurant.Description);
+                cmd.Parameters.AddWithValue("@WebsiteURL", restaurant.WebsiteURL);
+
+                // Execute the stored procedure
+                dBConnect.DoUpdateUsingCmdObj(cmd);
+
+                ViewBag.Message = "Restaurant added successfully!";
+                return View(new Restaurant()); // Reset form
+            }
+            catch (Exception ex)
+            {
+                ViewBag.Message = $"Error adding restaurant: {ex.Message}";
+                return View(restaurant);
+            }
+        }
     }
 }
