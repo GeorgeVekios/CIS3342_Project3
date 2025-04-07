@@ -5,6 +5,7 @@
 }
 
 <!DOCTYPE html>
+<html>
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -24,20 +25,22 @@
             <form asp-action="SearchRestaurants" method="get">
                 <div class="row g-3">
                     <div class="col-md-4">
-                        <input type="text" class="form-control" name="name" placeholder="Restaurant Name">
-                    </div>
-                    <div class="col-md-3">
-                        <select class="form-select" name="cuisine">
-                            <option value="">All Cuisines</option>
-                            <option value="Italian">Italian</option>
-                            <option value="Indian">Indian</option>
-                            <option value="Mexican">Mexican</option>
-                        </select>
+                        <label class="form-label">Cuisine</label>
+                        @foreach (string cuisine in (List<string>)ViewBag.Cuisines)
+                        {
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" name="cuisines" value="@cuisine" id="@cuisine.Replace(" ", "")">
+                                <label class="form-check-label" for="@cuisine.Replace(" ", "")">@cuisine</label>
+                            </div>
+                        }
                     </div>
                     <div class="col-md-3">
                         <input type="text" class="form-control" name="city" placeholder="City">
                     </div>
-                    <div class="col-md-2">
+                    <div class="col-md-3">
+                        <input type="text" class="form-control" name="state" placeholder="State">
+                    </div>
+                    <div class="col-md-2 d-flex align-items-end">
                         <button type="submit" class="btn btn-primary w-100">Search</button>
                     </div>
                 </div>
