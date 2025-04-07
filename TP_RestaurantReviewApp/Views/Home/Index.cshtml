@@ -21,7 +21,7 @@
                                 <a class="nav-link dropdown-toggle text-light" href="#" role="button" data-bs-toggle="dropdown">
                                 </a>
                                 <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" asp-controller="Restaurant" asp-action="Search">Find Restaurants</a></li>
+                                    <li><a class="dropdown-item" asp-controller="Restaurant" asp-action="SearchRestaurants">Find Restaurants</a></li>
                                     <li><a class="dropdown-item" asp-controller="Reservation" asp-action="Make">Make Reservation</a></li>
                                     <li><a class="dropdown-item" asp-controller="Review" asp-action="Create">Create Review</a></li>
                                     <li><a class="dropdown-item" asp-controller="Review" asp-action="Manage">Manage Reviews</a></li>
@@ -40,7 +40,7 @@
         <div class="container text-center mt-4">
             <h1>Welcome to ForkScore !</h1>
             <p>Find and review the best restaurants in your area!</p>
-            <a class="btn btn-primary mt-3" asp-controller="Restaurant" asp-action="Search">Find Restaurant</a>
+            <a class="btn btn-primary mt-3" asp-controller="Restaurant" asp-action="SearchRestaurants">Find Restaurant</a>
         </div>
     </body>
     </html>
