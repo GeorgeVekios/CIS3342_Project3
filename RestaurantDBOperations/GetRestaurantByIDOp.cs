@@ -10,10 +10,9 @@ namespace RestaurantDBOperations
     {
         private DBConnect dbConnect = new DBConnect();
 
-        public Restaurant GetRestaurantByID()
+        public Restaurant GetRestaurantByID(int id)
         {
             Restaurant restaurant = new Restaurant();
-            DBConnect dBConnect = new DBConnect();
 
             SqlCommand cmd = new SqlCommand();
             cmd.CommandType = CommandType.StoredProcedure;
@@ -21,7 +20,7 @@ namespace RestaurantDBOperations
 
             cmd.Parameters.AddWithValue("@RestaurantID", id);
 
-            DataSet ds = dBConnect.GetDataSetUsingCmdObj(cmd);
+            DataSet ds = dbConnect.GetDataSetUsingCmdObj(cmd);
 
             if (ds.Tables[0].Rows.Count > 0)
             {
@@ -46,6 +45,7 @@ namespace RestaurantDBOperations
                 restaurant.AvgPriceRating = Convert.ToDouble(record["AvgPriceRating"]);
                 restaurant.WebsiteURL = record["WebsiteURL"].ToString();
             }
+            return restaurant;
         }
     }
 }
