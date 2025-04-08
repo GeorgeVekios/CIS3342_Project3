@@ -41,8 +41,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AddRestaurantOp.cs" />
     <Compile Include="GetRestaurantByIDOp.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SearchRestaurantsOp.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ObjectClassLibrary\ObjectClassLibrary.csproj">
