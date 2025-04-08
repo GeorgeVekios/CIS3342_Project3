@@ -6,6 +6,7 @@ using RestaurantDBOperations;
 using ObjectClassLibrary;
 using System.Diagnostics;
 using DBOperationsClassLibrary;
+using TP_RestaurantReviewApp.Models;
 
 namespace TP_RestaurantReviewApp.Controllers
 {
@@ -44,7 +45,7 @@ namespace TP_RestaurantReviewApp.Controllers
         public IActionResult CreateRestaurantPage(CreateRestaurantPageViewModel viewModel, int OwnerID)
         {
             AddRestaurantOp addRestaurantOp = new AddRestaurantOp();
-
+            Restaurant restaurant = viewModel.Restaurant;
             try
             {
                 addRestaurantOp.AddRestaurant(restaurant);
