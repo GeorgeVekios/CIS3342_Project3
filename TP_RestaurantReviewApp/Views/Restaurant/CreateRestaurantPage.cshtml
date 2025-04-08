@@ -1,4 +1,4 @@
-﻿@model TP_RestaurantReviewApp.Models.Restaurant
+﻿@model TP_RestaurantReviewApp.Models.CreateRestaurantPageViewModel
 @{
 	Layout = null;
 	ViewData["Title"] = "ForkScore - Create New Restaurant";
@@ -15,26 +15,26 @@
 		<div class="container">
 			<h2>Create a New Restaurant</h2>
 
-			@using (Html.BeginForm("CreateRestaurantPage", "Restaurants", FormMethod.Post))
+			@using (Html.BeginForm("CreateRestaurantPageViewModel", "Restaurant", FormMethod.Post))
 			{
 				<div class="form-group">
-					@Html.LabelFor(m => m.Name, "Restaurant Name")
-					@Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
+					@Html.LabelFor(m => m.Restaurant.Name, "Restaurant Name")
+					@Html.TextBoxFor(m => m.Restaurant.Name, new { @class = "form-control" })
 				</div>
 
 				<div class="form-group">
-					@Html.LabelFor(m => m.StreetAddress, "Address Line 1")
-					@Html.TextBoxFor(m => m.StreetAddress, new { @class = "form-control" })
+					@Html.LabelFor(m => m.Restaurant.StreetAddress, "Address Line 1")
+					@Html.TextBoxFor(m => m.Restaurant.StreetAddress, new { @class = "form-control" })
 				</div>
 
 				<div class="form-group">
-					@Html.LabelFor(m => m.City, "City")
-					@Html.TextBoxFor(m => m.City, new { @class = "form-control" })
+					@Html.LabelFor(m => m.Restaurant.City, "City")
+					@Html.TextBoxFor(m => m.Restaurant.City, new { @class = "form-control" })
 				</div>
 
 				<div class="form-group">
-					@Html.LabelFor(m => m.State, "State")
-					@Html.DropDownListFor(m => m.State, new SelectList(new[]
+					@Html.LabelFor(m => m.Restaurant.State, "State")
+					@Html.DropDownListFor(m => m.Restaurant.State, new SelectList(new[]
 										{
 				new SelectListItem { Text = "PA", Value = "PA" },
 				new SelectListItem { Text = "NY", Value = "NY" }
@@ -42,13 +42,13 @@
 				</div>
 
 				<div class="form-group">
-					@Html.LabelFor(m => m.ZipCode, "Zip Code")
-					@Html.TextBoxFor(m => m.ZipCode, new { @class = "form-control" })
+					@Html.LabelFor(m => m.Restaurant.ZipCode, "Zip Code")
+					@Html.TextBoxFor(m => m.Restaurant.ZipCode, new { @class = "form-control" })
 				</div>
 
 				<div class="form-group">
-					@Html.LabelFor(m => m.Cuisine, "Cuisine")
-					@Html.DropDownListFor(m => m.Cuisine, new SelectList(new[]
+					@Html.LabelFor(m => m.Restaurant.Cuisine, "Cuisine")
+					@Html.DropDownListFor(m => m.Restaurant.Cuisine, new SelectList(new[]
 										{
 				new SelectListItem { Text = "Italian", Value = "Italian" },
 				new SelectListItem { Text = "Mexican", Value = "Mexican" },
@@ -57,18 +57,18 @@
 				</div>
 
 				<div class="form-group">
-					@Html.LabelFor(m => m.HoursOfOperation, "Hours of Operation")
-					@Html.TextAreaFor(m => m.HoursOfOperation, new { @class = "form-control", rows = "3" })
+					@Html.LabelFor(m => m.Restaurant.HoursOfOperation, "Hours of Operation")
+					@Html.TextAreaFor(m => m.Restaurant.HoursOfOperation, new { @class = "form-control", rows = "3" })
 				</div>
 
 				<div class="form-group">
-					@Html.LabelFor(m => m.PhoneNum, "Phone Number")
-					@Html.TextBoxFor(m => m.PhoneNum, new { @class = "form-control", type = "tel" })
+					@Html.LabelFor(m => m.Restaurant.PhoneNum, "Phone Number")
+					@Html.TextBoxFor(m => m.Restaurant.PhoneNum, new { @class = "form-control", type = "tel" })
 				</div>
 
 				<div class="form-group">
-					@Html.LabelFor(m => m.Email, "Email")
-					@Html.TextBoxFor(m => m.Email, new { @class = "form-control", type = "email" })
+					@Html.LabelFor(m => m.Restaurant.Email, "Email")
+					@Html.TextBoxFor(m => m.Restaurant.Email, new { @class = "form-control", type = "email" })
 				</div>
 
 				@* ownerName to be added later *@
@@ -78,8 +78,8 @@
             </div> *@
 
 				<div class="form-group">
-					@Html.LabelFor(m => m.WebsiteURL, "Website URL")
-					@Html.TextBoxFor(m => m.WebsiteURL, new { @class = "form-control", type = "url" })
+					@Html.LabelFor(m => m.Restaurant.WebsiteURL, "Website URL")
+					@Html.TextBoxFor(m => m.Restaurant.WebsiteURL, new { @class = "form-control", type = "url" })
 				</div>
 
 				@* social media to be handled later *@
@@ -89,8 +89,8 @@
             </div> *@
 
 				<div class="form-group">
-					@Html.LabelFor(m => m.Description, "Marketing Description")
-					@Html.TextAreaFor(m => m.Description, new { @class = "form-control", rows = "5" })
+					@Html.LabelFor(m => m.Restaurant.Description, "Marketing Description")
+					@Html.TextAreaFor(m => m.Restaurant.Description, new { @class = "form-control", rows = "5" })
 				</div>
 
 				<div class="form-group text-center">
