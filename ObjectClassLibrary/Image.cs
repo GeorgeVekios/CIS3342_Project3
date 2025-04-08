@@ -1,4 +1,6 @@
-﻿namespace ObjectClassLibrary
+﻿using System;
+
+namespace ObjectClassLibrary
 {
     public class image
     {
