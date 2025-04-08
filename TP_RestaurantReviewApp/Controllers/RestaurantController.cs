@@ -230,7 +230,7 @@ namespace TP_RestaurantReviewApp.Controllers
             }
             return cuisines;
         }
-        [HttpGet]
+        [HttpGet("Restaurant/CreateRestaurantPage")]
         public IActionResult CreateRestaurantPage()
         {
             var viewModel = new CreateRestaurantPageViewModel { Restaurant = new Restaurant() };
