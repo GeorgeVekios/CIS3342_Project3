@@ -231,13 +231,15 @@ namespace TP_RestaurantReviewApp.Controllers
             return cuisines;
         }
         [HttpGet]
-        public IActionResult Add()
+        public IActionResult CreateRestaurantPage()
         {
-            return View(new Restaurant());
+            var viewModel = new CreateRestaurantPageViewModel { Restaurant = new Restaurant() };
+            return View(viewModel);
         }
 
         [HttpPost]
-        public IActionResult Add(Restaurant restaurant)
+        //ownerId will be passed as UserID in cookie
+        public IActionResult CreateRestaurantPage(CreateRestaurantPageViewModel viewModel, int OwnerID)
         {
             try
             {
@@ -247,29 +249,30 @@ namespace TP_RestaurantReviewApp.Controllers
                 cmd.CommandText = "TP_AddRestaurant"; // Assuming this is your stored procedure name
 
                 // Map model properties to stored procedure parameters
-                cmd.Parameters.AddWithValue("@OwnerID", restaurant.OwnerID); // You might need to set this from context/user
-                cmd.Parameters.AddWithValue("@Name", restaurant.Name);
-                cmd.Parameters.AddWithValue("@Cuisine", restaurant.Cuisine);
-                cmd.Parameters.AddWithValue("@StreetAddress", restaurant.StreetAddress);
-                cmd.Parameters.AddWithValue("@City", restaurant.City);
-                cmd.Parameters.AddWithValue("@State", restaurant.State);
-                cmd.Parameters.AddWithValue("@ZipCode", restaurant.ZipCode);
-                cmd.Parameters.AddWithValue("@HoursOfOperation", restaurant.HoursOfOperation);
-                cmd.Parameters.AddWithValue("@Email", restaurant.Email);
-                cmd.Parameters.AddWithValue("@PhoneNumber", restaurant.PhoneNum);
-                cmd.Parameters.AddWithValue("@Description", restaurant.Description);
-                cmd.Parameters.AddWithValue("@WebsiteURL", restaurant.WebsiteURL);
+                cmd.Parameters.AddWithValue("@OwnerID", OwnerID);
+                cmd.Parameters.AddWithValue("@Name", viewModel.Restaurant.Name);
+                cmd.Parameters.AddWithValue("@Cuisine", viewModel.Restaurant.Cuisine);
+                cmd.Parameters.AddWithValue("@StreetAddress", viewModel.Restaurant.StreetAddress);
+                cmd.Parameters.AddWithValue("@City", viewModel.Restaurant.City);
+                cmd.Parameters.AddWithValue("@State", viewModel.Restaurant.State);
+                cmd.Parameters.AddWithValue("@ZipCode", viewModel.Restaurant.ZipCode);
+                cmd.Parameters.AddWithValue("@HoursOfOperation", viewModel.Restaurant.HoursOfOperation);
+                cmd.Parameters.AddWithValue("@Email", viewModel.Restaurant.Email);
+                cmd.Parameters.AddWithValue("@PhoneNumber", viewModel.Restaurant.PhoneNum);
+                cmd.Parameters.AddWithValue("@Description", viewModel.Restaurant.Description);
+                cmd.Parameters.AddWithValue("@WebsiteURL", viewModel.Restaurant.WebsiteURL);
 
                 // Execute the stored procedure
                 dBConnect.DoUpdateUsingCmdObj(cmd);
 
-                ViewBag.Message = "Restaurant added successfully!";
-                return View(new Restaurant()); // Reset form
+                viewModel.Message = "Restaurant added successfully!";
+                viewModel.Restaurant = new Restaurant();
+                return View(viewModel); // Reset form
             }
             catch (Exception ex)
             {
-                ViewBag.Message = $"Error adding restaurant: {ex.Message}";
-                return View(restaurant);
+                viewModel.Message = $"Error adding restaurant: {ex.Message}";
+                return View(viewModel);
             }
         }
     }
