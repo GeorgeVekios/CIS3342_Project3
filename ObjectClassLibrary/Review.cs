@@ -1,4 +1,4 @@
-﻿namespace TP_RestaurantReviewApp.Models
+﻿namespace ObjectClassLibrary
 {
     public class Review
     {
