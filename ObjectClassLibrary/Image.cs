@@ -2,7 +2,7 @@
 
 namespace ObjectClassLibrary
 {
-    public class image
+    public class Image
     {
         private string fileLocation;
         private string caption;
@@ -11,7 +11,7 @@ namespace ObjectClassLibrary
 
 
         //default constructor
-        public image()
+        public Image()
         {
             fileLocation = string.Empty;
             caption = string.Empty;
@@ -21,7 +21,7 @@ namespace ObjectClassLibrary
         }
 
         //parameterized
-        public image(string FileLocation, string Caption, string StorageSize, int ImageId)
+        public Image(string FileLocation, string Caption, string StorageSize, int ImageId)
         {
             this.fileLocation = FileLocation;
             this.caption = Caption;
