@@ -10,4 +10,10 @@
     <PackageReference Include="System.Data.SqlClient" Version="4.9.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\DBOperationsClassLibrary\DBOperationsClassLibrary.csproj" />
+    <ProjectReference Include="..\ObjectClassLibrary\ObjectClassLibrary.csproj" />
+    <ProjectReference Include="..\Utilties\Utilties.csproj" />
+  </ItemGroup>
+
 </Project>
