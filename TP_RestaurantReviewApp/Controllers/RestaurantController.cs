@@ -1,10 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System.Data;
-using System.Data.SqlClient;
-using Utilities;
 using RestaurantDBOperations;
 using ObjectClassLibrary;
-using System.Diagnostics;
 using DBOperationsClassLibrary;
 using TP_RestaurantReviewApp.Models;
 using ReviewDBOperations;

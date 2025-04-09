@@ -6,123 +6,147 @@
 }
 
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>@ViewData["Title"]</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <title>@ViewData["Title"]</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .header-banner {
+            background: linear-gradient(135deg, #6b7280, #374151);
+            color: white;
+            padding: 2rem;
+            border-radius: 0.5rem;
+            margin-bottom: 2rem;
+        }
+        .rating-badge {
+            background-color: #f8f9fa;
+            padding: 0.5rem 1rem;
+            border-radius: 1rem;
+            margin: 0.25rem;
+        }
+        .section-card {
+            border: none;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border-radius: 0.5rem;
+            overflow: hidden;
+        }
+        .gallery-img {
+            transition: transform 0.3s ease;
+        }
+        .gallery-img:hover {
+            transform: scale(1.05);
+        }
+        .review-card {
+            transition: box-shadow 0.3s ease;
+        }
+        .review-card:hover {
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+    </style>
 </head>
-<body>
-    <div class="container mt-5">
-        <h1 class="mb-4">@Model.Restaurant.Name's Profile</h1>
-
-        <div class="row">
-            <div class="col-md-6">
-                <h4>Restaurant Details</h4>
-                <ul class="list-group">
-                    <li class="list-group-item"><strong>Cuisine:</strong> @Model.Restaurant.Cuisine</li>
-                    <li class="list-group-item"><strong>Address:</strong> @Model.Restaurant.StreetAddress, @Model.Restaurant.City, @Model.Restaurant.State, @Model.Restaurant.ZipCode</li>
-                    <li class="list-group-item"><strong>Phone:</strong> @Model.Restaurant.PhoneNum</li>
-                    <li class="list-group-item"><strong>Email:</strong> @Model.Restaurant.Email</li>
-                    <li class="list-group-item"><strong>Website:</strong> <a href="@Model.Restaurant.WebsiteURL" target="_blank">@Model.Restaurant.WebsiteURL</a></li>
-                </ul>
-            </div>
-
-            <div class="col-md-6">
-                <h4>Restaurant Ratings</h4>
-                <ul class="list-group">
-                    <li class="list-group-item"><strong>Overall Rating:</strong> @Model.Restaurant.OverallRating</li>
-                    <li class="list-group-item"><strong>Food Rating:</strong> @Model.Restaurant.AvgFoodRating</li>
-                    <li class="list-group-item"><strong>Service Rating:</strong> @Model.Restaurant.AvgServiceRating</li>
-                    <li class="list-group-item"><strong>Atmosphere Rating:</strong> @Model.Restaurant.AvgAtmosphereRating</li>
-                    <li class="list-group-item"><strong>Price Rating:</strong> @Model.Restaurant.AvgPriceRating</li>
-                </ul>
-            </div>
+<body class="bg-light">
+    <div class="container py-5">
+        <div class="header-banner">
+            <h1 class="display-4 fw-bold">@Model.Restaurant.Name</h1>
+            <p class="lead">@Model.Restaurant.Cuisine Cuisine</p>
         </div>
 
-        <div class="row mt-4">
-            <div class="col-md-12">
-                <h4>Hours of Operation</h4>
-                <p>@Model.Restaurant.HoursOfOperation</p>
-            </div>
-        </div>
+        <div class="row g-4">
+            <div class="col-lg-7">
+                <div class="section-card p-4 mb-4">
+                    <h3 class="h4 mb-3">Details</h3>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><i class="bi bi-geo-alt me-2"></i>@Model.Restaurant.StreetAddress, @Model.Restaurant.City, @Model.Restaurant.State @Model.Restaurant.ZipCode</li>
+                        <li class="mb-2"><i class="bi bi-telephone me-2"></i>@Model.Restaurant.PhoneNum</li>
+                        <li class="mb-2"><i class="bi bi-envelope me-2"></i><a href="mailto:@Model.Restaurant.Email" class="text-decoration-none">@Model.Restaurant.Email</a></li>
+                        <li><i class="bi bi-globe me-2"></i><a href="@Model.Restaurant.WebsiteURL" target="_blank" class="text-decoration-none">@Model.Restaurant.WebsiteURL</a></li>
+                    </ul>
+                </div>
 
-        <div class="row mt-4">
-            <div class="col-md-12">
-                <h4>Description</h4>
-                <p>@Model.Restaurant.Description</p>
+                <div class="section-card p-4">
+                    <h3 class="h4 mb-3">Description</h3>
+                    <p class="text-muted">@Model.Restaurant.Description</p>
+                    <h5 class="h6 mt-4">Hours of Operation</h5>
+                    <p class="text-muted mb-0">@Model.Restaurant.HoursOfOperation</p>
+                </div>
+            </div>
+
+            <div class="col-lg-5">
+                <div class="section-card p-4">
+                    <h3 class="h4 mb-3">Ratings</h3>
+                    <div class="d-flex flex-wrap gap-2">
+                        <span class="rating-badge"><strong>Overall:</strong> @Model.Restaurant.OverallRating</span>
+                        <span class="rating-badge"><strong>Food:</strong> @Model.Restaurant.AvgFoodRating</span>
+                        <span class="rating-badge"><strong>Service:</strong> @Model.Restaurant.AvgServiceRating</span>
+                        <span class="rating-badge"><strong>Atmosphere:</strong> @Model.Restaurant.AvgAtmosphereRating</span>
+                        <span class="rating-badge"><strong>Price:</strong> @Model.Restaurant.AvgPriceRating</span>
+                    </div>
+                </div>
             </div>
         </div>
 
         @if (Model.ImageGallery != null && Model.ImageGallery.Any())
         {
-            <div class="row mt-4">
-                <div class="col-md-12">
-                    <h4>Gallery</h4>
-                    <div class="row">
-                        @foreach (var image in Model.ImageGallery)
-                        {
-                            <div class="col-md-3 mb-3">
-                                <img src="@image.FileLocation" alt="@image.Caption" class="img-fluid rounded" />
-                                @if (!string.IsNullOrEmpty(image.Caption))
-                                {
-                                    <p class="text-center mt-1">@image.Caption</p>
-                                }
-                            </div>
-                        }
-                    </div>
-                </div>
-            </div>
-        }
-
-        @if (Model.ReviewList != null && Model.ReviewList.Any())
-        {
-            <div class="row mt-4">
-                <div class="col-md-12">
-                    <h4>Reviews</h4>
-                    @foreach (var review in Model.ReviewList)
+            <div class="section-card mt-4 p-4">
+                <h3 class="h4 mb-3">Gallery</h3>
+                <div class="row g-3">
+                    @foreach (var image in Model.ImageGallery)
                     {
-                        <div class="card mb-3">
-                            <div class="card-header">
-                                <h5 class="card-title mb-0">@review.ReviewTitle</h5>
+                        <div class="col-md-4">
+                            <div class="overflow-hidden rounded">
+                                <img src="@image.FileLocation" alt="@image.Caption" class="img-fluid gallery-img" />
                             </div>
-                            <div class="card-body">
-                                <p class="card-text">@review.ReviewBody</p>
-                                <ul class="list-group list-group-flush">
-                                    <li class="list-group-item"><strong>Food Rating:</strong> @review.FoodRating</li>
-                                    <li class="list-group-item"><strong>Service Rating:</strong> @review.ServiceRating</li>
-                                    <li class="list-group-item"><strong>Atmosphere Rating:</strong> @review.AtmosphereRating</li>
-                                    <li class="list-group-item"><strong>Price Rating:</strong> @review.PriceRating</li>
-                                </ul>
-                            </div>
-                            <div class="card-footer text-muted">
-                                <p class="mb-1">Visited: @review.VisitDate.ToString("MMMM dd, yyyy")</p>
-                                <p class="mb-0">Posted: @review.CreatedAt.ToString("MMMM dd, yyyy")</p>
-                            </div>
+                            @if (!string.IsNullOrEmpty(image.Caption))
+                            {
+                                <p class="text-center text-muted mt-2 small">@image.Caption</p>
+                            }
                         </div>
                     }
                 </div>
             </div>
         }
 
+        @if (Model.ReviewList != null && Model.ReviewList.Any())
+        {
+            <div class="section-card mt-4 p-4">
+                <h3 class="h4 mb-4">Reviews</h3>
+                @foreach (var review in Model.ReviewList)
+                {
+                    <div class="review-card p-3 mb-3 bg-white rounded">
+                        <h5 class="fw-semibold">@review.ReviewTitle</h5>
+                        <p class="text-muted mb-2">@review.ReviewBody</p>
+                        <div class="d-flex flex-wrap gap-2 mb-2">
+                            <span class="rating-badge">Food: @review.FoodRating</span>
+                            <span class="rating-badge">Service: @review.ServiceRating</span>
+                            <span class="rating-badge">Atmosphere: @review.AtmosphereRating</span>
+                            <span class="rating-badge">Price: @review.PriceRating</span>
+                        </div>
+                        <div class="text-muted small">
+                            <p class="mb-0">Visited: @review.VisitDate.ToString("MMMM dd, yyyy")</p>
+                            <p class="mb-0">Posted: @review.CreatedAt.ToString("MMMM dd, yyyy")</p>
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+
         @if (Model.SocialMediaList != null && Model.SocialMediaList.Any())
         {
-            <div class="row mt-4">
-                <div class="col-md-12">
-                    <h4>Social Media</h4>
-                    <ul class="list-group list-group-horizontal">
-                        @foreach (var social in Model.SocialMediaList)
-                        {
-                            <li class="list-group-item">
-                                <a href="@social.Link" target="_blank">@social.Platform</a>
-                            </li>
-                        }
-                    </ul>
+            <div class="section-card mt-4 p-4">
+                <h3 class="h4 mb-3">Connect With Us</h3>
+                <div class="d-flex gap-3">
+                    @foreach (var social in Model.SocialMediaList)
+                    {
+                        <a href="@social.Link" target="_blank" class="btn btn-outline-primary rounded-pill">@social.Platform</a>
+                    }
                 </div>
             </div>
         }
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
 </body>
 </html>
