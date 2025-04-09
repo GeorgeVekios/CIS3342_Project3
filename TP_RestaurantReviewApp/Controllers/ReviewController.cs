@@ -63,5 +63,64 @@ namespace TP_RestaurantReviewApp.Controllers
 
             return View(model);
         }
+
+        [HttpGet()]
+        public IActionResult ManageReviews(int userID)
+        {
+            GetReviewsByUserIDOp getReviewsByUserIDOp = new GetReviewsByUserIDOp();
+            List<Review> reviewList = getReviewsByUserIDOp.GetReviewsByUserID(userID);
+
+            ManageReviewsViewModel model = new ManageReviewsViewModel
+            {
+                ReviewList = reviewList
+            };
+            return View(model);
+        }
+
+        [HttpGet()]
+        public IActionResult Edit(int id, int userID)
+        {
+            GetReviewsByUserIDOp getReviewsByUserIDOp = new GetReviewsByUserIDOp();
+            List<Review> reviewList = getReviewsByUserIDOp.GetReviewsByUserID(userID);
+
+            ManageReviewsViewModel model = new ManageReviewsViewModel
+            {
+                ReviewList = reviewList
+            };
+            ViewBag.EditingReviewId = id;
+            return View("ManageReviews", model);
+        }
+
+        [HttpPost()]
+        public IActionResult Update(Review review)
+        {
+            GetReviewsByUserIDOp getReviewsByUserIDOp = new GetReviewsByUserIDOp();
+            List<Review> reviewList = getReviewsByUserIDOp.GetReviewsByUserID(review.UserID);
+
+            ManageReviewsViewModel model = new ManageReviewsViewModel
+            {
+                ReviewList = reviewList
+            };
+
+            UpdateReviewOp updateReviewOp = new UpdateReviewOp();
+            updateReviewOp.UpdateReview(review);
+            return RedirectToAction("ManageReviews");
+        }
+
+        [HttpGet()]
+        public IActionResult Delete(Review review)
+        {
+            DeleteReviewOp deleteReviewOp = new DeleteReviewOp();
+            deleteReviewOp.DeleteReview(review.ReviewID);
+            return RedirectToAction("ManageReviews");
+        }
+
+        [HttpGet()]
+        public IActionResult Cancel()
+        {
+            return RedirectToAction("ManageReviews");
+        }
+
+
     }
 }
