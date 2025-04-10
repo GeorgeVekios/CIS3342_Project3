@@ -15,7 +15,7 @@
 		<div class="container">
 			<h2>Create a New Restaurant</h2>
 
-			@using (Html.BeginForm("CreateRestaurantPageViewModel", "Restaurant", FormMethod.Post))
+			@using (Html.BeginForm("CreateRestaurantPageViewModel", "RestaurantController", FormMethod.Post))
 			{
 				<div class="form-group">
 					@Html.LabelFor(m => m.Restaurant.Name, "Restaurant Name")

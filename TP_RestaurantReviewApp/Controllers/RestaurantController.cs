@@ -33,8 +33,8 @@ namespace TP_RestaurantReviewApp.Controllers
             return View("SearchRestaurants", restaurantList);
         }
 
-        [HttpGet]
-        public IActionResult Add()
+        [HttpGet("Restaurant/CreateRestaurantPage")]
+        public IActionResult CreateRestaurantPage()
         {
             var viewModel = new CreateRestaurantPageViewModel { Restaurant = new Restaurant() };
             return View(viewModel);
