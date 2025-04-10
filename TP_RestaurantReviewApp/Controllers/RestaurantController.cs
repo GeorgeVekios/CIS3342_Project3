@@ -43,17 +43,19 @@ namespace TP_RestaurantReviewApp.Controllers
             return View(new SearchRestaurantsViewModel(restaurantList));
         }
 
-        [HttpGet]
-        public IActionResult Add()
+        [HttpGet("Restaurant/CreateRestaurantPage")]
+        public IActionResult CreateRestaurantPage()
         {
-            return View(new Restaurant());
+            var viewModel = new CreateRestaurantPageViewModel { Restaurant = new Restaurant() };
+            return View(viewModel);
         }
 
         [HttpPost]
-        public IActionResult Add(Restaurant restaurant)
+        //ownerId will be passed as UserID in cookie
+        public IActionResult CreateRestaurantPage(CreateRestaurantPageViewModel viewModel, int OwnerID)
         {
             AddRestaurantOp addRestaurantOp = new AddRestaurantOp();
-
+            Restaurant restaurant = viewModel.Restaurant;
             try
             {
                 addRestaurantOp.AddRestaurant(restaurant);
@@ -62,8 +64,8 @@ namespace TP_RestaurantReviewApp.Controllers
             }
             catch (Exception ex)
             {
-                ViewBag.Message = $"Error adding restaurant: {ex.Message}";
-                return View(restaurant);
+                viewModel.Message = $"Error adding restaurant: {ex.Message}";
+                return View(viewModel);
             }
         }
     }

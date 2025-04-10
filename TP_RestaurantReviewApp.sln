@@ -21,6 +21,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageDBOperations", "ImageD
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SocialMediaDBOperations", "SocialMediaDBOperations\SocialMediaDBOperations.csproj", "{ACB14B05-3A5E-4978-8D65-F1108A464D05}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReservationDBOperations", "ReservationDBOperations\ReservationDBOperations.csproj", "{35D60D18-0F0A-47D4-A1FC-94F92DEAE0AE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -63,6 +65,10 @@ Global
 		{ACB14B05-3A5E-4978-8D65-F1108A464D05}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ACB14B05-3A5E-4978-8D65-F1108A464D05}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ACB14B05-3A5E-4978-8D65-F1108A464D05}.Release|Any CPU.Build.0 = Release|Any CPU
+		{35D60D18-0F0A-47D4-A1FC-94F92DEAE0AE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{35D60D18-0F0A-47D4-A1FC-94F92DEAE0AE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{35D60D18-0F0A-47D4-A1FC-94F92DEAE0AE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{35D60D18-0F0A-47D4-A1FC-94F92DEAE0AE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
