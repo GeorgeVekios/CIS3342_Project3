@@ -1,0 +1,108 @@
+﻿@model ManageReviewsViewModel
+
+@{
+    ViewData["Title"] = "ForkScore - Manage Your Restaurant Reviews";
+}
+
+<div class="container my-4">
+    <h1 class="mb-4">Manage Your Restaurant Reviews</h1>
+
+    <div class="reviews-container">
+        @if (Model.ReviewList.Any())
+        {
+            <div class="table-responsive">
+                <table class="table table-striped table-hover">
+                    <thead class="table-dark">
+                        <tr>
+                            <th scope="col">Title</th>
+                            <th scope="col">Restaurant</th>
+                            <th scope="col">Ratings</th>
+                            <th scope="col">Visit Date</th>
+                            <th scope="col">Created</th>
+                            <th scope="col">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var review in Model.ReviewList)
+                        {
+                            @if (ViewBag.EditingReviewId != null && ViewBag.EditingReviewId.ToString() == review.ReviewID.ToString())
+                            {
+                                <tr>
+                                    <td colspan="6">
+                                        <form asp-action="Update" method="post" class="p-3 bg-light border rounded">
+                                            <input type="hidden" name="reviewID" value="@review.ReviewID" />
+                                            <input type="hidden" name="userID" value="@review.UserID" />
+                                            <input type="hidden" name="restaurantID" value="@review.RestaurantID" />
+                                            <input type="hidden" name="createdAt" value="@review.CreatedAt" />
+                                            <div class="mb-3">
+                                                <label class="form-label">Title</label>
+                                                <input name="reviewTitle" class="form-control" value="@review.ReviewTitle" required />
+                                            </div>
+                                            <div class="mb-3">
+                                                <label class="form-label">Review</label>
+                                                <textarea name="reviewBody" class="form-control" rows="3" required>@review.ReviewBody</textarea>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label class="form-label">Food Rating (1-5)</label>
+                                                <input type="number" name="foodRating" class="form-control" min="1" max="5" value="@review.FoodRating" required />
+                                            </div>
+                                            <div class="mb-3">
+                                                <label class="form-label">Service Rating (1-5)</label>
+                                                <input type="number" name="serviceRating" class="form-control" min="1" max="5" value="@review.ServiceRating" required />
+                                            </div>
+                                            <div class="mb-3">
+                                                <label class="form-label">Atmosphere Rating (1-5)</label>
+                                                <input type="number" name="atmosphereRating" class="form-control" min="1" max="5" value="@review.AtmosphereRating" required />
+                                            </div>
+                                            <div class="mb-3">
+                                                <label class="form-label">Price Rating (1-5)</label>
+                                                <input type="number" name="priceRating" class="form-control" min="1" max="5" value="@review.PriceRating" required />
+                                            </div>
+                                            <div class="mb-3">
+                                                <label class="form-label">Visit Date</label>
+                                                <input type="date" name="visitDate" class="form-control" value="@review.VisitDate.ToString("yyyy-MM-dd")" required />
+                                            </div>
+                                            <div class="d-flex gap-2">
+                                                <button type="submit" class="btn btn-success">Update</button>
+                                                <a asp-action="Cancel" asp-route-id="@review.ReviewID" asp-route-userID="@review.UserID" class="btn btn-secondary">Cancel</a>
+                                            </div>
+                                        </form>
+                                    </td>
+                                </tr>
+                            }
+                            else
+                            {
+                                <tr>
+                                    <td>@review.ReviewTitle</td>
+                                    <td>Restaurant #@review.RestaurantID</td>
+                                    <td>
+                                        Food: @review.FoodRating/5<br>
+                                        Service: @review.ServiceRating/5<br>
+                                        Atmosphere: @review.AtmosphereRating/5<br>
+                                        Price: @review.PriceRating/5
+                                    </td>
+                                    <td>@review.VisitDate.ToShortDateString()</td>
+                                    <td>@review.CreatedAt.ToShortDateString()</td>
+                                    <td>
+                                        <div class="d-flex gap-2">
+                                            <a asp-action="Edit" asp-route-id="@review.ReviewID" asp-route-userID="@review.UserID" class="btn btn-primary btn-sm">Edit</a>
+                                            <a asp-action="Delete" asp-route-id="@review.ReviewID" asp-route-userID="@review.UserID" class="btn btn-danger btn-sm">Delete</a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
+        else
+        {
+            <div class="alert alert-info" role="alert">
+                You haven't written any reviews yet.
+            </div>
+        }
+    </div>
+</div>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />

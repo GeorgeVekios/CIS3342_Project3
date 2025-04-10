@@ -41,7 +41,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AddReviewOp.cs" />
+    <Compile Include="DeleteReviewOp.cs" />
+    <Compile Include="GetReviewsByRestaurantIDOp.cs" />
+    <Compile Include="GetReviewsByUserIDOp.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UpdateReviewOp.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ObjectClassLibrary\ObjectClassLibrary.csproj">

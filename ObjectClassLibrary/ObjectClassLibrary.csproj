@@ -45,6 +45,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Restaurant.cs" />
     <Compile Include="Review.cs" />
+    <Compile Include="SecurityQuestion.cs" />
+    <Compile Include="SecurutyQuestionForUser.cs" />
+    <Compile Include="SocialMedia.cs" />
     <Compile Include="User.cs" />
   </ItemGroup>
   <ItemGroup>
