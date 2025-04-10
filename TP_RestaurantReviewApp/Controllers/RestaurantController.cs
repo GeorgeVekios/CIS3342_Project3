@@ -1,12 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System.Data;
-using System.Data.SqlClient;
-using Utilities;
 using RestaurantDBOperations;
 using ObjectClassLibrary;
-using System.Diagnostics;
 using DBOperationsClassLibrary;
 using TP_RestaurantReviewApp.Models;
+using ReviewDBOperations;
+using ImageDBOperations;
+using SocialMediaDBOperations;
 
 namespace TP_RestaurantReviewApp.Controllers
 {
@@ -18,7 +17,17 @@ namespace TP_RestaurantReviewApp.Controllers
         {
             GetRestaurantByIDOp getRestaurantByIDOp = new GetRestaurantByIDOp();
             Restaurant restaurant = getRestaurantByIDOp.GetRestaurantByID(id);
-            return View(restaurant);
+
+            GetReviewsByRestaurantIDOp getReviewsByRestaurantIDOp = new GetReviewsByRestaurantIDOp();
+            List<Review> reviewList = getReviewsByRestaurantIDOp.GetReviewsByRestaurantID(id);
+
+            GetImagesByRestaurantIDOp getImagesByRestaurantIDOp = new GetImagesByRestaurantIDOp();
+            List<Image> imageGallery = getImagesByRestaurantIDOp.GetImagesByRestaurantID(id);
+
+            GetSocialMediaByRestaurantIDOp getSocialMediaByRestaurantIDOp = new GetSocialMediaByRestaurantIDOp();
+            List<SocialMedia> socialMediaList = getSocialMediaByRestaurantIDOp.GetSocialMediaByRestaurantID(id);
+
+            return View(new RestaurantProfileViewModel(restaurant, reviewList, imageGallery, socialMediaList));
         }
 
         [HttpGet("Restaurant/SearchRestaurants")]
@@ -30,7 +39,8 @@ namespace TP_RestaurantReviewApp.Controllers
             
             GetAllCuisinesOp getAllCuisinesOp = new GetAllCuisinesOp();
             ViewBag.Cuisines = getAllCuisinesOp.GetAllCuisines();
-            return View("SearchRestaurants", restaurantList);
+
+            return View(new SearchRestaurantsViewModel(restaurantList));
         }
 
         [HttpGet("Restaurant/CreateRestaurantPage")]
