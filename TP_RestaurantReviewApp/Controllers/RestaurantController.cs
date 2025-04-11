@@ -68,5 +68,30 @@ namespace TP_RestaurantReviewApp.Controllers
                 return View(viewModel);
             }
         }
+
+        public IActionResult ManageRestaurantPage(int restaurantId)
+        {
+            //placeholder - need to make db operation to fetch restaurant by restaurantId
+            var restaurant = new Restaurant();
+
+            var model = new ManageRestaurantPageViewModel
+            {
+                Restaurant = restaurant
+            };
+            return View(model);
+        }
+
+        [HttpPost]
+        public IActionResult ManageRestaurantPage(ManageRestaurantPageViewModel viewModel)
+        {
+            UpdateRestaurantOp updateRestaurantOp = new UpdateRestaurantOp();
+            if (ModelState.IsValid)
+            {
+                // Update restaurant in DB
+                updateRestaurantOp.UpdateRestaurant(viewModel.Restaurant);
+                viewModel.Message = "Successfully Updated Restaurant";
+            }
+            return View(viewModel);
+        }
     }
 }

@@ -15,7 +15,7 @@
         <div class="container">
             <h2>Make a Reservation</h2>
 
-            @using (Html.BeginForm("CreateReservationPageViewModel", "CreateReservationPage", FormMethod.Post))
+            @using (Html.BeginForm("CreateReservationPageViewModel", "ReservationController", FormMethod.Post))
             {
                 @Html.HiddenFor(m => m.RestaurantID) <!-- Hidden field for RestaurantID -->
 
