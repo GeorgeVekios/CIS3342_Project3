@@ -43,6 +43,7 @@ namespace TP_RestaurantReviewApp.Controllers
             }
         }
 
+        [HttpGet("Reservation/ManageReservationPage")]
         public IActionResult ManageReservationPage(int reservationId)
         {
             //placeholder - need to make db operation to fetch reservation by reservationId
