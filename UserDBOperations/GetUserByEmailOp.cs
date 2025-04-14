@@ -27,7 +27,7 @@ namespace UserDBOperations
             user.FirstName = Convert.ToString(record["FirstName"]);
             user.LastName = Convert.ToString(record["LastName"]);
             user.Username = Convert.ToString(record["Username"]);
-            user.Password = Convert.ToString(record["PasswordHash"]);
+            user.Password = Convert.ToString(record["Password"]);
             user.Email = Convert.ToString(record["Email"]);
             user.PhoneNum = Convert.ToString(record["PhoneNum"]);
             user.CreatedAt = Convert.ToDateTime(record["CreatedAt"]);
