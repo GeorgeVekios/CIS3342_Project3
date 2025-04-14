@@ -123,7 +123,7 @@ namespace ObjectClassLibrary
 			this.userType = userType;
 			this.firstName = firstName;
 			this.lastName = lastName;
-			this.passwordHash = passwordHash;
+			this.password = passwordHash;
 			this.email = email;
 			this.phoneNum = phoneNum;
             this.createdAt = createdAt;
