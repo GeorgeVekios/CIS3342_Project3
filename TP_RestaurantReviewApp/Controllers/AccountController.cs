@@ -56,10 +56,11 @@ namespace TP_RestaurantReviewApp.Controllers
             RegisterViewModel model = new RegisterViewModel();
 
             model.SecurityQuestions = new List<Microsoft.AspNetCore.Mvc.Rendering.SelectListItem>();
-            foreach(var securityQuestion in securityQuestions) {
+            foreach (var securityQuestion in securityQuestions) {
                 {
                     model.Sec
                 }
+            }
 
         }
     }
