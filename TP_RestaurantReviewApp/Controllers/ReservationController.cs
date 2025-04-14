@@ -46,8 +46,11 @@ namespace TP_RestaurantReviewApp.Controllers
         [HttpGet("Reservation/ManageReservationPage")]
         public IActionResult ManageReservationPage(int reservationId)
         {
-            //placeholder - need to make db operation to fetch reservation by reservationId
+
+            GetReservationByReservationIDOp getResByID = new GetReservationByReservationIDOp();
             var reservation = new Reservation();
+
+            reservation = getResByID.GetReservationByReservationID(reservationId);
 
             var viewModel = new ManageReservationPageViewModel
             {
