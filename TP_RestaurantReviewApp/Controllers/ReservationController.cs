@@ -33,14 +33,44 @@ namespace TP_RestaurantReviewApp.Controllers
             {
                 addReservationOp.AddReservation(reservation);
                 viewModel.Message = "Reservation submitted successfully!";
-                viewModel.Reservation = new Reservation(); // Reset form
-                return View(new Reservation()); //reset controls
+                viewModel.Reservation = new Reservation(); //resetting form
+                return View(new Reservation()); //resetting controls
             }
             catch (Exception ex)
             {
                 viewModel.Message = $"Error submitting reservation: {ex.Message}";
                 return View(viewModel);
             }
+        }
+
+        [HttpGet("Reservation/ManageReservationPage")]
+        public IActionResult ManageReservationPage(int reservationId)
+        {
+
+            GetReservationByReservationIDOp getResByID = new GetReservationByReservationIDOp();
+            var reservation = new Reservation();
+
+            reservation = getResByID.GetReservationByReservationID(reservationId);
+
+            var viewModel = new ManageReservationPageViewModel
+            {
+                RestaurantID = reservation.RestId,
+                Reservation = reservation
+            };
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        public IActionResult UpdateReservation(ManageReservationPageViewModel viewModel)
+        {
+            UpdateReservationOp updateReservationOp = new UpdateReservationOp();
+            if (ModelState.IsValid)
+            {
+                //updating reservation in db
+                updateReservationOp.UpdateReservation(viewModel.Reservation);
+                viewModel.Message = "Reservation Updated Successfully";
+            }
+            return View(viewModel);
         }
     }
 }

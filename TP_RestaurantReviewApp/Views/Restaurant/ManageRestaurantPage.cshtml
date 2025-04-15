@@ -1,14 +1,16 @@
-﻿@model TP_RestaurantReviewApp.Models.CreateRestaurantPageViewModel
+﻿@model TP_RestaurantReviewApp.Models.ManageRestaurantPageViewModel
 @{
     Layout = "_Layout"; // using layout
-    ViewData["Title"] = "ForkScore - Create New Restaurant";
+    ViewData["Title"] = "ForkScore - Manage Restaurant";
 }
 
 <div class="container">
-    <h2>Create a New Restaurant</h2>
+    <h2>Edit Restaurant</h2>
 
-    @using (Html.BeginForm("CreateRestaurantPageViewModel", "Restaurant", FormMethod.Post))
+    @using (Html.BeginForm("ManageRestaurantPage", "Restaurant", FormMethod.Post))
     {
+        @Html.HiddenFor(m => m.Restaurant.RestaurantID) <!-- Hidden field for RestaurantID -->
+
         <div class="form-group">
             @Html.LabelFor(m => m.Restaurant.Name, "Restaurant Name")
             @Html.TextBoxFor(m => m.Restaurant.Name, new { @class = "form-control" })
@@ -30,7 +32,7 @@
                      {
         new SelectListItem { Text = "PA", Value = "PA" },
         new SelectListItem { Text = "NY", Value = "NY" }
-        }, "Value", "Text"), "Select State", new { @class = "form-control" })
+        }, "Value", "Text", Model.Restaurant.State), "Select State", new { @class = "form-control" })
         </div>
 
         <div class="form-group">
@@ -45,7 +47,7 @@
         new SelectListItem { Text = "Italian", Value = "Italian" },
         new SelectListItem { Text = "Mexican", Value = "Mexican" },
         new SelectListItem { Text = "American Grill", Value = "American Grill" }
-        }, "Value", "Text"), "Select Cuisine", new { @class = "form-control" })
+        }, "Value", "Text", Model.Restaurant.Cuisine), "Select Cuisine", new { @class = "form-control" })
         </div>
 
         <div class="form-group">
@@ -74,10 +76,10 @@
         </div>
 
         <div class="form-group text-center">
-            <button type="submit" class="btn btn-primary">Create Restaurant</button>
+            <button type="submit" class="btn btn-primary">Update Restaurant</button>
         </div>
 
-        @if (ViewBag.Message != null)
+        @if (!string.IsNullOrEmpty(ViewBag.Message))
         {
             <div class="text-center">
                 <span class="text-danger">@ViewBag.Message</span>
@@ -89,4 +91,5 @@
 @section Scripts {
     <!-- Scripts are already included in _Layout.cshtml -->
     <!-- Add any page-specific scripts here if needed -->
+}
 }
