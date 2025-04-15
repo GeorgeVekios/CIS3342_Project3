@@ -26,7 +26,7 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Restaurants" asp-action="SearchRestaurants">Search Restaurants</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Restaurant" asp-action="SearchRestaurants">Search Restaurants</a>
                         </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle text-dark" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -34,11 +34,11 @@
                             </a>
                             <ul class="dropdown-menu">
                                 <li><a class="dropdown-item" asp-controller="Restaurant" asp-action="SearchRestaurants">Find Restaurants</a></li>
-                                <li><a class="dropdown-item" asp-controller="Reservation" asp-action="Make">Make Reservation</a></li>
-                                <li><a class="dropdown-item" asp-controller="Review" asp-action="Create">Create Review</a></li>
-                                <li><a class="dropdown-item" asp-controller="Review" asp-action="Manage">Manage Reviews</a></li>
-                                <li><a class="dropdown-item" asp-controller="Restaurant" asp-action="Add">Add Restaurant</a></li>
-                                <li><a class="dropdown-item" asp-controller="Reservation" asp-action="Manage">Manage Reservations</a></li>
+                                <li><a class="dropdown-item" asp-controller="Reservation" asp-action="CreateReservationPage">Make Reservation</a></li>
+                                <li><a class="dropdown-item" asp-controller="Review" asp-action="CreateReview">Create Review</a></li>
+                                <li><a class="dropdown-item" asp-controller="Review" asp-action="ManageReview">Manage Reviews</a></li>
+                                <li><a class="dropdown-item" asp-controller="Restaurant" asp-action="CreateRestaurantPage">Add Restaurant</a></li>
+                                <li><a class="dropdown-item" asp-controller="Reservation" asp-action="ManageReservationPage">Manage Reservations</a></li>
                                 <li><hr class="dropdown-divider" /></li>
                                 <li><a class="dropdown-item" asp-controller="Home" asp-action="Logout">Logout</a></li>
                             </ul>
