@@ -124,12 +124,12 @@ namespace TP_RestaurantReviewApp.Controllers
                     Email verificationEmail = new Email();
 
                     string emailBody = "Dear " + newUser.FirstName + ",<br /><br />" +
-                   "Thank you for registering with ForkScore! To complete your account setup, please verify your email address using the code below:<br /><br />" +
-                   "<strong>Verification Code: " + code + "</strong><br /><br />" +
-                   "Enter this code on the verification page to activate your account. For security, this code will expire in 24 hours.<br /><br />" +
-                   "If you didn’t initiate this registration, please ignore this email or contact our support team at support@forkscore.com.<br /><br />" +
-                   "Welcome to ForkScore!<br />" +
-                   "The ForkScore Team";
+                                       "Thank you for registering with ForkScore! To complete your account setup, please verify your email address using the code below:<br /><br />" +
+                                       "<strong>Verification Code: " + code + "</strong><br /><br />" +
+                                       "Enter this code on the verification page to activate your account. For security, this code will expire in 24 hours.<br /><br />" +
+                                       "If you didn’t initiate this registration, please ignore this email or contact our support team at support@forkscore.com.<br /><br />" +
+                                       "Welcome to ForkScore!<br />" +
+                                       "The ForkScore Team";
 
                     verificationEmail.SendMail(newUser.Email, "tuo77176@temple.edu", "ForkScore - Verification Code", emailBody);
                     return RedirectToAction("Verify");

@@ -10,7 +10,7 @@
     <body>
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
             <div class="container">
-                <a class="navbar-brand" asp-controller="Home" asp-action="Index">Restaurant Reviews</a>
+                <a class="navbar-brand" asp-controller="Home" asp-action="Index">ForkScore</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -22,10 +22,10 @@
                                 </a>
                                 <ul class="dropdown-menu">
                                     <li><a class="dropdown-item" asp-controller="Restaurant" asp-action="SearchRestaurants">Find Restaurants</a></li>
-                                    <li><a class="dropdown-item" asp-controller="Reservation" asp-action="Make">Make Reservation</a></li>
-                                    <li><a class="dropdown-item" asp-controller="Review" asp-action="Create">Create Review</a></li>
-                                    <li><a class="dropdown-item" asp-controller="Review" asp-action="Manage">Manage Reviews</a></li>
-                                    <li><a class="dropdown-item" asp-controller="Restaurant" asp-action="Add">Add Restaurant</a></li>
+                                    <li><a class="dropdown-item" asp-controller="Reservation" asp-action="CreateReservationPage">Make Reservation</a></li>
+                                    <li><a class="dropdown-item" asp-controller="Review" asp-action="CreateReview">Create Review</a></li>
+                                    <li><a class="dropdown-item" asp-controller="Review" asp-action="ManageReviews">Manage Reviews</a></li>
+                                    <li><a class="dropdown-item" asp-controller="Restaurant" asp-action="CreateRestaurantPage">Add Restaurant</a></li>
                                     <li><a class="dropdown-item" asp-controller="Reservation" asp-action="Manage">Manage Reservations</a></li>
                                     <li><hr class="dropdown-divider" /></li>
                                     <li><a class="dropdown-item" asp-controller="Home" asp-action="Logout">Logout</a></li>
