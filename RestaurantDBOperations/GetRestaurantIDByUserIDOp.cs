@@ -10,7 +10,7 @@ using Utilities;
 
 namespace RestaurantDBOperations
 {
-    public class GetRestaurantByUserIDOp
+    public class GetRestaurantIDByUserIDOp
     {
         private DBConnect dbConnect = new DBConnect();
         public int GetRestaurantIDByUserID(int userID)

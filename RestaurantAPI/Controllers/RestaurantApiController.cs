@@ -20,16 +20,19 @@ namespace RestaurantAPI.Controllers
         }
 
         // GET: api/restaurant/{id}
-        [HttpGet("{id}")]
+        [HttpGet("{userID}")]
         public ActionResult<Restaurant> GetRestaurantByUserID(int userID)
         {
+            GetRestaurantIDByUserIDOp getRestaurantIDByUserIDOp = new GetRestaurantIDByUserIDOp();
+            int restID = getRestaurantIDByUserIDOp.GetRestaurantIDByUserID(userID);
 
-            var restaurant = restaurants.FirstOrDefault(r => r.RestaurantID == id);
-            if (restaurant == null)
+            GetRestaurantByIDOp getRestaurantByIDOp = new GetRestaurantByIDOp();
+            Restaurant returnRestaurant = getRestaurantByIDOp.GetRestaurantByID(restID);
+            if (returnRestaurant == null)
             {
                 return NotFound();
             }
-            return Ok(restaurant);
+            return Ok(returnRestaurant);
         }
     }
 }

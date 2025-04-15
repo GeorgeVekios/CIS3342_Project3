@@ -44,7 +44,7 @@
     <Compile Include="AddRestaurantOp.cs" />
     <Compile Include="GetAllRestaurantsOp.cs" />
     <Compile Include="GetRestaurantByIDOp.cs" />
-    <Compile Include="GetRestaurantByUserIDOp.cs" />
+    <Compile Include="GetRestaurantIDByUserIDOp.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SearchRestaurantsOp.cs" />
     <Compile Include="UpdateRestaurantOp.cs" />
