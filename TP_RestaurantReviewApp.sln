@@ -23,6 +23,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SocialMediaDBOperations", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReservationDBOperations", "ReservationDBOperations\ReservationDBOperations.csproj", "{35D60D18-0F0A-47D4-A1FC-94F92DEAE0AE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RestaurantAPI", "RestaurantAPI\RestaurantAPI.csproj", "{59C6D131-AA3F-4FDE-B013-D624DDAD35CF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -69,6 +71,10 @@ Global
 		{35D60D18-0F0A-47D4-A1FC-94F92DEAE0AE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{35D60D18-0F0A-47D4-A1FC-94F92DEAE0AE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{35D60D18-0F0A-47D4-A1FC-94F92DEAE0AE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{59C6D131-AA3F-4FDE-B013-D624DDAD35CF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{59C6D131-AA3F-4FDE-B013-D624DDAD35CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{59C6D131-AA3F-4FDE-B013-D624DDAD35CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{59C6D131-AA3F-4FDE-B013-D624DDAD35CF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
