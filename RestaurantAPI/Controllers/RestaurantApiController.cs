@@ -34,5 +34,20 @@ namespace RestaurantAPI.Controllers
             }
             return Ok(returnRestaurant);
         }
+
+        // POST: api/restaurant
+        [HttpPost]
+        public IActionResult CreateRestaurant([FromBody] Restaurant restaurant)
+        {
+            if (restaurant == null)
+            {
+                return BadRequest("Restaurant is null");
+            }
+
+            AddRestaurantOp addRestaurantOp = new AddRestaurantOp();
+            addRestaurantOp.AddRestaurant(restaurant);
+
+            return CreatedAtAction(nameof(GetRestaurantByUserID), new { userID = restaurant.OwnerID }, restaurant);
+        }
     }
 }
