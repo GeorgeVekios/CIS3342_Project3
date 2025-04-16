@@ -9,15 +9,6 @@ namespace RestaurantAPI.Controllers
 
     public class RestaurantApiController : Controller
     {
-        private static List<Restaurant> restaurants = new List<Restaurant>();
-        private static int _nextId = 1;
-
-        // GET: api/restaurant
-        [HttpGet]
-        public ActionResult<IEnumerable<Restaurant>> GetRestaurants()
-        {
-            return Ok(restaurants);
-        }
 
         // GET: api/restaurant/{id}
         [HttpGet("{userID}")]
@@ -49,5 +40,30 @@ namespace RestaurantAPI.Controllers
 
             return CreatedAtAction(nameof(GetRestaurantByUserID), new { userID = restaurant.OwnerID }, restaurant);
         }
+        [HttpPut]
+        public IActionResult UpdateRestaurant([FromBody] Restaurant restaurant)
+        {
+
+            if (restaurant == null)
+            {
+                return BadRequest("Restaurant is null");
+            }
+            UpdateRestaurantOp updateRestaurantOp = new UpdateRestaurantOp();
+            updateRestaurantOp.UpdateRestaurant(restaurant);
+
+            return NoContent();
+        }
+        [HttpDelete("{restaurantID}")]
+        public IActionResult DeleteRestaurant(int restaurantID)
+        {
+            if(restaurantID == 0 || restaurantID == null)
+            {
+                return NotFound();
+            }
+            DeleteRestaurantByRestaurantIDOp deleteRestaurantOp = new DeleteRestaurantByRestaurantIDOp();
+            deleteRestaurantOp.DeleteRestaurantByRestaurantID(restaurantID);
+            return NoContent();
+        }
+
     }
 }
