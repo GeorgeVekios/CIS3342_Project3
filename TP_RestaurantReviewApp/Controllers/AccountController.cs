@@ -29,7 +29,8 @@ namespace TP_RestaurantReviewApp.Controllers
             GetUserByUsernameOp getUserByUsernameOp = new GetUserByUsernameOp();
             if (ModelState.IsValid)
             {
-                User user = getUserByUsernameOp.GetUserByUsername(model.Username);
+                User user = new User();
+                //User user = getUserByUsernameOp.GetUserByUsername(model.Username);
 
                 if (user != null && user.Password == model.Password)
                 {
@@ -49,13 +50,13 @@ namespace TP_RestaurantReviewApp.Controllers
             return View(model);
         }
 
-        [HttpGet()]
-        public IActionResult Register()
-        {
-            GetAllSecurityQuestionsOp getAllSecurityQuestionsOp = new GetAllSecurityQuestionsOp();
-            List<SecurityQuestion> securityQuestions = getAllSecurityQuestionsOp.GetAllSecurityQuestions();
+        //[HttpGet()]
+        //public IActionResult Register()
+        //{
+        //    GetAllSecurityQuestionsOp getAllSecurityQuestionsOp = new GetAllSecurityQuestionsOp();
+        //    List<SecurityQuestion> securityQuestions = getAllSecurityQuestionsOp.GetAllSecurityQuestions();
 
-            RegisterViewModel model = new RegisterViewModel();
+        //    RegisterViewModel model = new RegisterViewModel();
 
             model.SecurityQuestions = new List<Microsoft.AspNetCore.Mvc.Rendering.SelectListItem>();
             foreach (var securityQuestion in securityQuestions)
