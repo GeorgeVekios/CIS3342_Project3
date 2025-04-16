@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System.ComponentModel.DataAnnotations;
 using System.Security.Permissions;
 
@@ -7,11 +9,13 @@ namespace TP_RestaurantReviewApp.Models
     public class RegisterViewModel
     {
         private string username;
+        private string userType;
         private string email;
         private string password;
         private string confirmPassword;
         private string firstName;
         private string lastName;
+        private string phoneNum;
         private List<SelectListItem> securityQuestions;
 
         private int securityQuestion1ID;
@@ -26,6 +30,13 @@ namespace TP_RestaurantReviewApp.Models
         {
             get { return username; }
             set { username = value; }
+        }
+
+        [Required(ErrorMessage = "Please select a role")]
+        public string UserType
+        {
+            get { return userType; }
+            set { userType = value; }
         }
 
         [Required(ErrorMessage = "Email is required.")]
@@ -67,6 +78,14 @@ namespace TP_RestaurantReviewApp.Models
             set { lastName = value; }
         }
 
+        public string PhoneNum
+        {
+            get { return phoneNum; }
+            set { phoneNum = value; }
+        }
+
+        [BindNever]
+        [ValidateNever]
         public List<SelectListItem> SecurityQuestions
         {
             get { return securityQuestions; }
@@ -119,14 +138,16 @@ namespace TP_RestaurantReviewApp.Models
            
         }
 
-        public RegisterViewModel(string username, string email, string password, string confirmPassword, string firstName, string lastName, List<SelectListItem> securityQuestions, int securityQuestion1ID, string answer1, int securityQuestion2ID, string answer2, int securityQuestion3ID, string answer3)
+        public RegisterViewModel(string username, string userType, string email, string password, string confirmPassword, string firstName, string lastName, string phoneNum, List<SelectListItem> securityQuestions, int securityQuestion1ID, string answer1, int securityQuestion2ID, string answer2, int securityQuestion3ID, string answer3)
         {
             Username = username;
+            UserType = userType;
             Email = email;
             Password = password;
             ConfirmPassword = confirmPassword;
             FirstName = firstName;
             LastName = lastName;
+            PhoneNum = phoneNum;
             SecurityQuestions = securityQuestions;
             SecurityQuestion1ID = securityQuestion1ID;
             Answer1 = answer1;

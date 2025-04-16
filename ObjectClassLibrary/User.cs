@@ -118,12 +118,12 @@ namespace ObjectClassLibrary
 			this.securityRecord3 = securityRecord3;
 		}
 
-		public User(string userType, string firstName, string lastName, string passwordHash, string email, string phoneNum, DateTime createdAt, bool isVerified, int securityRecord1, int securityRecord2, int securityRecord3)
+		public User(string userType, string firstName, string lastName, string password, string email, string phoneNum, DateTime createdAt, bool isVerified, int securityRecord1, int securityRecord2, int securityRecord3)
 		{
 			this.userType = userType;
 			this.firstName = firstName;
 			this.lastName = lastName;
-			this.password = passwordHash;
+			this.password = password;
 			this.email = email;
 			this.phoneNum = phoneNum;
             this.createdAt = createdAt;

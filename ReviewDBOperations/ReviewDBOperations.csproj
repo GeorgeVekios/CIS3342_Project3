@@ -43,6 +43,7 @@
   <ItemGroup>
     <Compile Include="AddReviewOp.cs" />
     <Compile Include="DeleteReviewOp.cs" />
+    <Compile Include="GetReviewByIDOp.cs" />
     <Compile Include="GetReviewsByRestaurantIDOp.cs" />
     <Compile Include="GetReviewsByUserIDOp.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

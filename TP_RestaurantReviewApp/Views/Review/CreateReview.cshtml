@@ -12,7 +12,7 @@
         </div>
 
         <div class="card-body p-4">
-            <form method="post" asp-action="CreateReview" asp-controller="Review">
+            <form asp-action="CreateReview" asp-controller="Review" method="post">
                 <input type="hidden" asp-for="@Model.Review.CreatedAt" />
 
                 <div class="row g-3">

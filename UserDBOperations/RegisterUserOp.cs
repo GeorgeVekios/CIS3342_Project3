@@ -26,9 +26,12 @@ namespace UserDBOperations
             cmd.Parameters.AddWithValue("@SecurityRecord2", user.SecurityRecord2);
             cmd.Parameters.AddWithValue("@SecurityRecord3", user.SecurityRecord3);
 
-            int rowsAffected = dbConnect.DoUpdateUsingCmdObj(cmd);
+            SqlParameter outputParam = new SqlParameter("@NewUserID", System.Data.SqlDbType.Int);
+            outputParam.Direction = System.Data.ParameterDirection.Output;
+            cmd.Parameters.Add(outputParam);
 
-            return rowsAffected;
+            dbConnect.DoUpdateUsingCmdObj(cmd);
+            return (int)cmd.Parameters["@NewUserID"].Value;
         }
     }
 }

@@ -8,18 +8,13 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Cors" Version="2.3.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
     <PackageReference Include="System.Data.SqlClient" Version="4.9.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\DBOperationsClassLibrary\DBOperationsClassLibrary.csproj" />
-    <ProjectReference Include="..\ImageDBOperations\ImageDBOperations.csproj" />
     <ProjectReference Include="..\ObjectClassLibrary\ObjectClassLibrary.csproj" />
-    <ProjectReference Include="..\ReservationDBOperations\ReservationDBOperations.csproj" />
-    <ProjectReference Include="..\RestaurantDBOperations\RestaurantDBOperations.csproj" />
     <ProjectReference Include="..\ReviewDBOperations\ReviewDBOperations.csproj" />
-    <ProjectReference Include="..\SocialMediaDBOperations\SocialMediaDBOperations.csproj" />
-    <ProjectReference Include="..\UserDBOperations\UserDBOperations.csproj" />
     <ProjectReference Include="..\Utilties\Utilties.csproj" />
   </ItemGroup>
 
