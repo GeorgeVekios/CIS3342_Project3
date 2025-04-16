@@ -1,31 +1,34 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ObjectClassLibrary;
-using ReviewAPI.Models;
 using ReviewDBOperations;
+using System.Diagnostics;
 
 namespace ReviewAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ReviewController : Controller
+    public class ReviewController : ControllerBase
     {
         [HttpGet("{userID}")]
         public IActionResult GetReviewsByUserID(int userID)
         {
             GetReviewsByUserIDOp getReviewsByUserIDOp = new GetReviewsByUserIDOp();
-            List<Review> reviewList = new List<Review>();
+            List<Review> reviewList = getReviewsByUserIDOp.GetReviewsByUserID(userID);
 
             return Ok(reviewList);
         }
 
         [HttpPost]
-        public IActionResult AddReview([FromBody] Review review)
+        public IActionResult CreateReview([FromBody] Review review)
         {
             if (review == null)
             {
                 return BadRequest("Review is null");
             }
 
+            review.UserID = 1;
+            review.CreatedAt = DateTime.Now;
+            Debug.WriteLine("Received: " + "ReviewID: " + review.ReviewID + " UserID: " + review.UserID + "  RestaurantID:" + review.RestaurantID + "  Title:" + review.ReviewTitle + "  Body: " + review.ReviewBody + "Ratings: " + review.AtmosphereRating + review.FoodRating + review.ServiceRating + review.PriceRating + "   VisitDate: " + review.VisitDate + "  CreatedAt: " + review.CreatedAt);
             AddReviewOp addReviewOp = new AddReviewOp();
             addReviewOp.AddReview(review);
 

@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Mvc.Rendering;
 using ObjectClassLibrary;
 using RestaurantDBOperations;
-using ReviewDBOperations;
 using TP_RestaurantReviewApp.Models;
 
 namespace TP_RestaurantReviewApp.Controllers
@@ -11,11 +10,33 @@ namespace TP_RestaurantReviewApp.Controllers
     {
 
         private HttpClient httpClient;
-        private string apiBaseURL = "http://localhost:5184/api/ReviewAPI";
+        private string apiBaseURL = "https://localhost:7105/api/Review";
 
         public ReviewController(IHttpClientFactory httpClientFactory)
         {
             httpClient = httpClientFactory.CreateClient();
+        }
+
+        [HttpGet]
+        public IActionResult CreateReview()
+        {
+            GetAllRestaurantsOp getAllRestaurantsOp = new GetAllRestaurantsOp();
+            List<Restaurant> restaurantList = getAllRestaurantsOp.GetAllRestaurants();
+
+            ViewBag.RestaurantList = restaurantList.Select(r => new SelectListItem
+            {
+                Value = r.RestaurantID.ToString(),
+                Text = r.Name
+            }).ToList();
+
+            var model = new CreateReviewViewModel
+            {
+                Review = new Review
+                {
+                    CreatedAt = DateTime.Now
+                }
+            };
+            return View();
         }
 
         [HttpPost]

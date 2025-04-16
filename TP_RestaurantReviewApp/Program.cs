@@ -20,8 +20,21 @@ builder.Services.AddSession(options =>
     options.Cookie.IsEssential = true;
 });
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("Access-Control-Allow-Origin", builder =>
+    {
+        builder.AllowAnyOrigin()
+        .WithOrigins("http://www.temple.edu")
+        .AllowAnyMethod()
+        .AllowAnyHeader()
+        .AllowCredentials();
+    });
+});
+
 var app = builder.Build();
 
+app.UseCors("Access-Control-Allow-Origin");
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
