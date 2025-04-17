@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc.Rendering;
 using ObjectClassLibrary;
 using RestaurantDBOperations;
+using System.Diagnostics;
 using TP_RestaurantReviewApp.Models;
 
 namespace TP_RestaurantReviewApp.Controllers
@@ -63,6 +64,11 @@ namespace TP_RestaurantReviewApp.Controllers
                 {
                     ReviewList = reviews
                 };
+
+                if (TempData.ContainsKey("EditingReviewID"))
+                {
+                    ViewBag.EditingReviewID = TempData["EditingReviewID"];
+                }
                 return View(model);
             }
 
@@ -76,14 +82,53 @@ namespace TP_RestaurantReviewApp.Controllers
         [HttpPost]
         public async Task<IActionResult> Update(Review review)
         {
-            HttpResponseMessage response = await httpClient.PutAsJsonAsync(apiBaseURL, review);
-            return RedirectToAction("ManageReviews", new { userID = review.UserID });
+            if (!ModelState.IsValid)
+            {
+                return View(review);
+            }
+            Debug.WriteLine("Trying to fetch ReviewID: " + review.ReviewID);
+
+            HttpResponseMessage response = await httpClient.PutAsJsonAsync(apiBaseURL + "/" + review.ReviewID, review);
+            if (response.IsSuccessStatusCode)
+            {
+                return RedirectToAction("ManageReviews", new { userID = review.UserID });
+            }
+
+            ModelState.AddModelError("", "Failed to update review via API");
+            return View(review);
+        }
+
+        [HttpGet]
+        public IActionResult Edit(int reviewID, int userID)
+        {
+            TempData["EditingReviewID"] = reviewID;
+            return RedirectToAction("ManageReviews", new { userID = userID });
+            //HttpResponseMessage response = await httpClient.GetAsync(apiBaseURL + "/byID/" + reviewID);
+            //if (response.IsSuccessStatusCode)
+            //{
+            //    Review review = await response.Content.ReadFromJsonAsync<Review>();
+            //    return View(review);
+            //}
+
+            //return NotFound();
+        }
+
+        [HttpGet]
+        public IActionResult Cancel(int reviewID, int userID)
+        {
+            return RedirectToAction("ManageReviews", new { userID = userID });
         }
 
         [HttpGet]
         public async Task<IActionResult> Delete(int reviewID, int userID)
         {
             HttpResponseMessage response = await httpClient.DeleteAsync(apiBaseURL + "/" + reviewID);
+            if (response.IsSuccessStatusCode)
+            {
+                return RedirectToAction("ManageReviews", new { userID = userID });
+            }
+
+            TempData["Error"] = "Failed to delete review via API";
             return RedirectToAction("ManageReviews", new { userID = userID });
         }
     }

@@ -29,8 +29,7 @@ namespace TP_RestaurantReviewApp.Controllers
             GetUserByUsernameOp getUserByUsernameOp = new GetUserByUsernameOp();
             if (ModelState.IsValid)
             {
-                User user = new User();
-                //User user = getUserByUsernameOp.GetUserByUsername(model.Username);
+                User user = getUserByUsernameOp.GetUserByUsername(model.Username);
 
                 if (user != null && user.Password == model.Password)
                 {
@@ -42,21 +41,21 @@ namespace TP_RestaurantReviewApp.Controllers
                     {
                         Response.Cookies.Delete("LoginUsername");
                     }
-                    HttpContext.Session.SetInt32("UserID", user.UserID);
-                    return RedirectToAction("Dashboard", "Home");
+                    HttpContext.Session.SetString("Username", user.Username);
+                    return RedirectToAction("Index", "Home");
                 }
                 ModelState.AddModelError("", "Invalid login attempt");
             }
             return View(model);
         }
 
-        //[HttpGet()]
-        //public IActionResult Register()
-        //{
-        //    GetAllSecurityQuestionsOp getAllSecurityQuestionsOp = new GetAllSecurityQuestionsOp();
-        //    List<SecurityQuestion> securityQuestions = getAllSecurityQuestionsOp.GetAllSecurityQuestions();
+        [HttpGet()]
+        public IActionResult Register()
+        {
+            GetAllSecurityQuestionsOp getAllSecurityQuestionsOp = new GetAllSecurityQuestionsOp();
+            List<SecurityQuestion> securityQuestions = getAllSecurityQuestionsOp.GetAllSecurityQuestions();
 
-        //    RegisterViewModel model = new RegisterViewModel();
+            RegisterViewModel model = new RegisterViewModel();
 
             model.SecurityQuestions = new List<Microsoft.AspNetCore.Mvc.Rendering.SelectListItem>();
             foreach (var securityQuestion in securityQuestions)
@@ -96,9 +95,9 @@ namespace TP_RestaurantReviewApp.Controllers
                     FirstName = model.FirstName,
                     LastName = model.LastName,
                     PhoneNum = string.IsNullOrEmpty(model.PhoneNum) ? "N/A" : model.PhoneNum, // Default if null
-                    CreatedAt = DateTime.Now, // Set explicitly
+                    CreatedAt = DateTime.Now,
                     IsVerified = false,
-                    SecurityRecord1 = 0, // Temporary, to be updated later
+                    SecurityRecord1 = 0,
                     SecurityRecord2 = 0,
                     SecurityRecord3 = 0
                 };

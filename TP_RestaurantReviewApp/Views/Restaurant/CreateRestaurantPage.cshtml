@@ -1,89 +1,135 @@
 ﻿@model TP_RestaurantReviewApp.Models.CreateRestaurantPageViewModel
 @{
-    Layout = "_Layout"; // using layout
+    Layout = "_Layout";
     ViewData["Title"] = "ForkScore - Create New Restaurant";
 }
 
-<div class="container">
-    <h2>Create a New Restaurant</h2>
-
-    @using (Html.BeginForm("CreateRestaurantPageViewModel", "Restaurant", FormMethod.Post))
-    {
-        <div class="form-group">
-            @Html.LabelFor(m => m.Restaurant.Name, "Restaurant Name")
-            @Html.TextBoxFor(m => m.Restaurant.Name, new { @class = "form-control" })
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(m => m.Restaurant.StreetAddress, "Address Line 1")
-            @Html.TextBoxFor(m => m.Restaurant.StreetAddress, new { @class = "form-control" })
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(m => m.Restaurant.City, "City")
-            @Html.TextBoxFor(m => m.Restaurant.City, new { @class = "form-control" })
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(m => m.Restaurant.State, "State")
-            @Html.DropDownListFor(m => m.Restaurant.State, new SelectList(new[]
-                     {
-        new SelectListItem { Text = "PA", Value = "PA" },
-        new SelectListItem { Text = "NY", Value = "NY" }
-        }, "Value", "Text"), "Select State", new { @class = "form-control" })
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(m => m.Restaurant.ZipCode, "Zip Code")
-            @Html.TextBoxFor(m => m.Restaurant.ZipCode, new { @class = "form-control" })
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(m => m.Restaurant.Cuisine, "Cuisine")
-            @Html.DropDownListFor(m => m.Restaurant.Cuisine, new SelectList(new[]
-                     {
-        new SelectListItem { Text = "Italian", Value = "Italian" },
-        new SelectListItem { Text = "Mexican", Value = "Mexican" },
-        new SelectListItem { Text = "American Grill", Value = "American Grill" }
-        }, "Value", "Text"), "Select Cuisine", new { @class = "form-control" })
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(m => m.Restaurant.HoursOfOperation, "Hours of Operation")
-            @Html.TextAreaFor(m => m.Restaurant.HoursOfOperation, new { @class = "form-control", rows = "3" })
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(m => m.Restaurant.PhoneNum, "Phone Number")
-            @Html.TextBoxFor(m => m.Restaurant.PhoneNum, new { @class = "form-control", type = "tel" })
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(m => m.Restaurant.Email, "Email")
-            @Html.TextBoxFor(m => m.Restaurant.Email, new { @class = "form-control", type = "email" })
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(m => m.Restaurant.WebsiteURL, "Website URL")
-            @Html.TextBoxFor(m => m.Restaurant.WebsiteURL, new { @class = "form-control", type = "url" })
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(m => m.Restaurant.Description, "Marketing Description")
-            @Html.TextAreaFor(m => m.Restaurant.Description, new { @class = "form-control", rows = "5" })
-        </div>
-
-        <div class="form-group text-center">
-            <button type="submit" class="btn btn-primary">Create Restaurant</button>
-        </div>
-
-        @if (ViewBag.Message != null)
-        {
-            <div class="text-center">
-                <span class="text-danger">@ViewBag.Message</span>
-            </div>
-        }
+<style>
+    .text-temple {
+        color: #990000;
     }
+
+    .btn-temple {
+        background-color: #990000;
+        color: #fff;
+        border: none;
+    }
+
+    .btn-temple:hover {
+        background-color: #7a0000;
+        color: #fff;
+    }
+
+    .form-container {
+        background-color: #fff;
+        border-radius: 1rem;
+        padding: 2rem;
+        box-shadow: 0 0.75rem 1.5rem rgba(0, 0, 0, 0.1);
+        margin-top: 2rem;
+    }
+
+    .form-label {
+        font-weight: 600;
+    }
+
+    .text-error {
+        color: #dc3545;
+        font-size: 0.875rem;
+    }
+</style>
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-10">
+            <div class="form-container">
+                <h2 class="text-center text-temple mb-4">
+                    <i class="bi bi-shop me-2"></i>Create a New Restaurant
+                </h2>
+
+                @using (Html.BeginForm("CreateRestaurantPageViewModel", "Restaurant", FormMethod.Post))
+                {
+                    <div class="mb-3">
+                        @Html.LabelFor(m => m.Restaurant.Name, new { @class = "form-label" })
+                        @Html.TextBoxFor(m => m.Restaurant.Name, new { @class = "form-control", placeholder = "e.g., La Tavola" })
+                    </div>
+
+                    <div class="mb-3">
+                        @Html.LabelFor(m => m.Restaurant.StreetAddress, new { @class = "form-label" })
+                        @Html.TextBoxFor(m => m.Restaurant.StreetAddress, new { @class = "form-control", placeholder = "123 Main St" })
+                    </div>
+
+                    <div class="mb-3">
+                        @Html.LabelFor(m => m.Restaurant.City, new { @class = "form-label" })
+                        @Html.TextBoxFor(m => m.Restaurant.City, new { @class = "form-control", placeholder = "Philadelphia" })
+                    </div>
+
+                    <div class="mb-3">
+                        @Html.LabelFor(m => m.Restaurant.State, new { @class = "form-label" })
+                        @Html.DropDownListFor(m => m.Restaurant.State,
+                                 new SelectList(new[] {
+                    new SelectListItem { Text = "PA", Value = "PA" },
+                    new SelectListItem { Text = "NY", Value = "NY" }
+                    }, "Value", "Text"),
+                                 "Select State", new { @class = "form-control" })
+                    </div>
+
+                    <div class="mb-3">
+                        @Html.LabelFor(m => m.Restaurant.ZipCode, new { @class = "form-label" })
+                        @Html.TextBoxFor(m => m.Restaurant.ZipCode, new { @class = "form-control", placeholder = "19103" })
+                    </div>
+
+                    <div class="mb-3">
+                        @Html.LabelFor(m => m.Restaurant.Cuisine, new { @class = "form-label" })
+                        @Html.DropDownListFor(m => m.Restaurant.Cuisine,
+                                 new SelectList(new[] {
+                    new SelectListItem { Text = "Italian", Value = "Italian" },
+                    new SelectListItem { Text = "Mexican", Value = "Mexican" },
+                    new SelectListItem { Text = "American Grill", Value = "American Grill" }
+                    }, "Value", "Text"),
+                                 "Select Cuisine", new { @class = "form-control" })
+                    </div>
+
+                    <div class="mb-3">
+                        @Html.LabelFor(m => m.Restaurant.HoursOfOperation, new { @class = "form-label" })
+                        @Html.TextAreaFor(m => m.Restaurant.HoursOfOperation, new { @class = "form-control", rows = 3, placeholder = "Mon–Fri: 11am–10pm" })
+                    </div>
+
+                    <div class="mb-3">
+                        @Html.LabelFor(m => m.Restaurant.PhoneNum, new { @class = "form-label" })
+                        @Html.TextBoxFor(m => m.Restaurant.PhoneNum, new { @class = "form-control", type = "tel", placeholder = "555-555-5555" })
+                    </div>
+
+                    <div class="mb-3">
+                        @Html.LabelFor(m => m.Restaurant.Email, new { @class = "form-label" })
+                        @Html.TextBoxFor(m => m.Restaurant.Email, new { @class = "form-control", type = "email", placeholder = "contact@restaurant.com" })
+                    </div>
+
+                    <div class="mb-3">
+                        @Html.LabelFor(m => m.Restaurant.WebsiteURL, new { @class = "form-label" })
+                        @Html.TextBoxFor(m => m.Restaurant.WebsiteURL, new { @class = "form-control", type = "url", placeholder = "https://example.com" })
+                    </div>
+
+                    <div class="mb-3">
+                        @Html.LabelFor(m => m.Restaurant.Description, new { @class = "form-label" })
+                        @Html.TextAreaFor(m => m.Restaurant.Description, new { @class = "form-control", rows = 5, placeholder = "Describe your restaurant's vibe and specialties..." })
+                    </div>
+
+                    <div class="text-center mt-4">
+                        <button type="submit" class="btn btn-temple w-100">
+                            <i class="bi bi-plus-circle me-1"></i>Create Restaurant
+                        </button>
+                    </div>
+
+                    @if (ViewBag.Message != null)
+                    {
+                        <div class="text-center mt-3">
+                            <span class="text-error">@ViewBag.Message</span>
+                        </div>
+                    }
+                }
+            </div>
+        </div>
+    </div>
 </div>
 
 @section Scripts {

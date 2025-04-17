@@ -28,24 +28,41 @@ namespace ReviewAPI.Controllers
 
             review.UserID = 1;
             review.CreatedAt = DateTime.Now;
-            Debug.WriteLine("Received: " + "ReviewID: " + review.ReviewID + " UserID: " + review.UserID + "  RestaurantID:" + review.RestaurantID + "  Title:" + review.ReviewTitle + "  Body: " + review.ReviewBody + "Ratings: " + review.AtmosphereRating + review.FoodRating + review.ServiceRating + review.PriceRating + "   VisitDate: " + review.VisitDate + "  CreatedAt: " + review.CreatedAt);
             AddReviewOp addReviewOp = new AddReviewOp();
             addReviewOp.AddReview(review);
 
             return CreatedAtAction(nameof(GetReviewsByUserID), new { userID = review.UserID }, review);
         }
 
-        [HttpPut]
-        public IActionResult UpdateReview([FromBody] Review review)
+        [HttpGet("byID/{reviewID}")]
+        public IActionResult GetReviewByID(int reviewID)
         {
+            Debug.WriteLine("Trying to fetch ReviewID: " + reviewID);
+            GetReviewByIDOp getReviewByIDOp = new GetReviewByIDOp();
+            Review review = getReviewByIDOp.GetReviewByID(reviewID);
+
             if (review == null)
             {
-                return BadRequest("Review is null");
+                return NotFound();
+            }
+            return Ok(review);
+        }
+
+        [HttpPut("{reviewID}")]
+        public IActionResult UpdateReview(int reviewID, [FromBody] Review review)
+        {
+            if (review == null || review.ReviewID != reviewID)
+            {
+                return BadRequest("Invalid review data or reviewID mismatch");
             }
 
             UpdateReviewOp updateReviewOp = new UpdateReviewOp();
-            updateReviewOp.UpdateReview(review);
+            int rowsAffected = updateReviewOp.UpdateReview(review);
 
+            if (rowsAffected <= 0)
+            {
+                return NotFound("Review not found or update failed");
+            }
             return NoContent();
         }
 
@@ -53,8 +70,12 @@ namespace ReviewAPI.Controllers
         public IActionResult DeleteReview(int reviewID)
         {
             DeleteReviewOp deleteReviewOp = new DeleteReviewOp();
-            deleteReviewOp.DeleteReview(reviewID);
+            int rowsAffected = deleteReviewOp.DeleteReview(reviewID);
 
+            if (rowsAffected <= 0)
+            {
+                return NotFound("Review Not Found");
+            }
             return NoContent();
         }
     }
