@@ -15,10 +15,11 @@ namespace TP_RestaurantReviewApp.Controllers
         {
             LoginViewModel model = new LoginViewModel();
             string usernameFromCookie = Request.Cookies["LoginUsername"];
-            
-            if (usernameFromCookie != null && usernameFromCookie != "")
+            string passwordFromCookie = Request.Cookies["LoginPassword"];
+            if (usernameFromCookie != null && usernameFromCookie != "" && passwordFromCookie != null && passwordFromCookie != "")
             {
                 model.Username = usernameFromCookie;
+                model.Password = passwordFromCookie;
             }
             return View(model);
         }
@@ -36,12 +37,14 @@ namespace TP_RestaurantReviewApp.Controllers
                     if (model.RememberMe)
                     {
                         Response.Cookies.Append("LoginUsername", model.Username);
+                        Response.Cookies.Append("LoginPassword", model.Password);
                     }
                     else
                     {
                         Response.Cookies.Delete("LoginUsername");
                     }
                     HttpContext.Session.SetString("Username", user.Username);
+                    HttpContext.Session.SetString("UserType", user.UserType);
                     return RedirectToAction("Index", "Home");
                 }
                 ModelState.AddModelError("", "Invalid login attempt");
@@ -163,6 +166,113 @@ namespace TP_RestaurantReviewApp.Controllers
             }
             ModelState.AddModelError("", "Incorrect verification code");
             return View();
+        }
+
+        [HttpGet()]
+        public IActionResult ForgotUsername()
+        {
+            return View();
+        }
+
+        [HttpPost()]
+        public IActionResult ForgotUsername(string email)
+        {
+            GetUserByEmailOp getUserByEmailOp = new GetUserByEmailOp();
+            User user = getUserByEmailOp.GetUserByEmail(email);
+
+            if (user != null)
+            {
+                string subject = "Your Forgotten Username";
+                string body = $"Dear {user.FirstName},\n\nYour username is: {user.Username}\n\nIf you didn't request this, please ignore this email.";
+
+                Email emailSender = new Email();
+                emailSender.SendMail(user.Email, "support@forkscore.com", subject, body);
+
+                TempData["Message"] = "Your username has been sent to your email.";
+                return RedirectToAction("Login");
+            }
+            else
+            {
+                ModelState.AddModelError("", "Email not found.");
+            }
+
+            return View();
+        }
+
+        [HttpGet()]
+        public IActionResult ForgotPassword()
+        {
+            return View();
+        }
+
+        [HttpPost()]
+        public IActionResult ForgotPassword(string email)
+        {
+            GetUserByEmailOp getUserByEmailOp = new GetUserByEmailOp();
+            User user = getUserByEmailOp.GetUserByEmail(email);
+
+            if (user != null)
+            {
+                string token = Guid.NewGuid().ToString();
+                TempData["ResetToken"] = token;
+                TempData["UserID"] = user.UserID;
+
+                string resetLink = Url.Action("ResetPassword", "Account", new { token = token }, protocol: Request.Scheme);
+                string subject = "Password Reset Request";
+                string body = $"Dear {user.FirstName},\n\nTo reset your password, click on the link below:\n{resetLink}\n\nIf you didn't request this, please ignore this email.";
+
+                Email emailSender = new Email();
+                emailSender.SendMail(user.Email, "support@forkscore.com", subject, body);
+
+                TempData["Message"] = "A password reset link has been sent to your email.";
+                return RedirectToAction("Login");
+            }
+            else
+            {
+                ModelState.AddModelError("", "Email not found.");
+            }
+
+            return View();
+        }
+
+        [HttpGet()]
+        public IActionResult ResetPassword(string token)
+        {
+            if (token == TempData["ResetToken"]?.ToString())
+            {
+                return View();
+            }
+            else
+            {
+                TempData["Message"] = "Invalid or expired reset token.";
+                return RedirectToAction("Login");
+            }
+        }
+
+        [HttpPost()]
+        public IActionResult ResetPassword(string token, string newPassword)
+        {
+            if (token == TempData["ResetToken"]?.ToString())
+            {
+                int userID = (int)TempData["UserID"];
+                UpdateUserPasswordOp updateUserPasswordOp = new UpdateUserPasswordOp();
+                updateUserPasswordOp.UpdateUserPassword(userID, newPassword);
+
+                TempData["Message"] = "Your password has been reset successfully.";
+                return RedirectToAction("Login");
+            }
+            else
+            {
+                TempData["Message"] = "Invalid or expired reset token.";
+                return RedirectToAction("Login");
+            }
+        }
+
+        [HttpGet]
+        public IActionResult Logout()
+        {
+            HttpContext.Session.Clear();
+            return RedirectToAction("Index", "Home");
         }
 
         private string GenerateVerificationCode()

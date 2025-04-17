@@ -43,6 +43,20 @@
         color: #dc3545;
         font-size: 0.875rem;
     }
+
+    .forgot-links {
+        margin-top: 1rem;
+        text-align: center;
+    }
+
+    .forgot-links a {
+        color: #990000;
+        text-decoration: none;
+    }
+
+    .forgot-links a:hover {
+        text-decoration: underline;
+    }
 </style>
 
 <div class="row justify-content-center">
@@ -98,6 +112,14 @@
                     </a>
                 </div>
             </form>
+
+            <div class="forgot-links">
+                <p>
+                    <a href="@Url.Action("ForgotUsername", "Account")">Forgot Username?</a>
+                    |
+                    <a href="@Url.Action("ForgotPassword", "Account")">Forgot Password?</a>
+                </p>
+            </div>
         </div>
     </div>
 </div>

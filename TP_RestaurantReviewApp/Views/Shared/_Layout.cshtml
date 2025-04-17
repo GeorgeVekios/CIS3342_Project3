@@ -1,6 +1,7 @@
 ﻿@{
     bool isLoggedIn = Context.Session.GetString("Username") != null;
     string username = Context.Session.GetString("Username");
+    string userType = Context.Session.GetString("UserType");
 }
 
 <!DOCTYPE html>
@@ -70,6 +71,9 @@
                         <li class="nav-item">
                             <a class="nav-link" asp-area="" asp-controller="Restaurant" asp-action="SearchRestaurants">Search Restaurants</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="Reservation" asp-action="CreateReservationPage">Make a Reservation</a>
+                        </li>
                     </ul>
 
                     <div class="d-flex ms-auto">
@@ -80,14 +84,24 @@
                                     @username
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu-end">
+                                    
                                     <li><a class="dropdown-item" asp-controller="Restaurant" asp-action="SearchRestaurants">Find Restaurants</a></li>
                                     <li><a class="dropdown-item" asp-controller="Reservation" asp-action="CreateReservationPage">Make Reservation</a></li>
-                                    <li><a class="dropdown-item" asp-controller="Review" asp-action="CreateReview">Create Review</a></li>
-                                    <li><a class="dropdown-item" asp-controller="Review" asp-action="ManageReview">Manage Reviews</a></li>
-                                    <li><a class="dropdown-item" asp-controller="Restaurant" asp-action="CreateRestaurantPage">Add Restaurant</a></li>
-                                    <li><a class="dropdown-item" asp-controller="Reservation" asp-action="ManageReservationPage">Manage Reservations</a></li>
+
+                                    @if (userType == "Reviewer")
+                                    {
+                                        <li><a class="dropdown-item" asp-controller="Review" asp-action="CreateReview">Create Review</a></li>
+                                        <li><a class="dropdown-item" asp-controller="Review" asp-action="ManageReview">Manage Reviews</a></li>
+                                    }
+
+                                    @if (userType == "RestaurantRepresentative")
+                                    {
+                                        <li><a class="dropdown-item" asp-controller="Restaurant" asp-action="CreateRestaurantPage">Add Restaurant</a></li>
+                                        <li><a class="dropdown-item" asp-controller="Reservation" asp-action="ManageReservationPage">Manage Reservations</a></li>
+                                    }
+
                                     <li><hr class="dropdown-divider" /></li>
-                                    <li><a class="dropdown-item" asp-controller="Home" asp-action="Logout">Logout</a></li>
+                                    <li><a class="dropdown-item" asp-controller="Account" asp-action="Logout">Logout</a></li>
                                 </ul>
                             </li>
                         }

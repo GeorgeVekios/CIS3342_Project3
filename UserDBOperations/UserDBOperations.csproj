@@ -51,6 +51,7 @@
     <Compile Include="RegisterUserOp.cs" />
     <Compile Include="SaveSecurityAnswerOp.cs" />
     <Compile Include="UpdateUserInfoOp.cs" />
+    <Compile Include="UpdateUserPasswordOp.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ObjectClassLibrary\ObjectClassLibrary.csproj">
