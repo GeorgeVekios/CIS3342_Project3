@@ -43,6 +43,8 @@
   <ItemGroup>
     <Compile Include="GetAllCuisinesOp.cs" />
     <Compile Include="GetAllSecurityQuestionsOp.cs" />
+    <Compile Include="GetSecurityQuestionByIDOp.cs" />
+    <Compile Include="GetSecurityRecordByIDOp.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

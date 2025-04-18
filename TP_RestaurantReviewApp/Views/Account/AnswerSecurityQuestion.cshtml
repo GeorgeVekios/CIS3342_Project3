@@ -1,0 +1,24 @@
+﻿@{
+    ViewData["Title"] = "Security Question";
+}
+
+<h2>Answer Your Security Question</h2>
+<p>Please answer the security question below to verify your identity.</p>
+
+@if (!ViewData.ModelState.IsValid)
+{
+    <div class="text-danger mb-3">
+        @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+        {
+            <p>@error.ErrorMessage</p>
+        }
+    </div>
+}
+
+<form asp-action="AnswerSecurityQuestion" asp-controller="Account" method="post">
+    <div class="form-group">
+        <label>@ViewBag.SecurityQuestion</label>
+        <input type="text" class="form-control" name="answer" required />
+    </div>
+    <button type="submit" class="btn btn-primary">Submit Answer</button>
+</form>

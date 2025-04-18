@@ -155,7 +155,7 @@ namespace TP_RestaurantReviewApp.Controllers
         [HttpPost()]
         public IActionResult Verify(string inputCode)
         {
-            string actualCode = TempData["VerificationCode"] as string;
+            string actualCode = (string)TempData["VerificationCode"];
             int userID = (int)TempData["UserID"];
 
             MarkUserAsVerifiedOp markUserAsVerifiedOp = new MarkUserAsVerifiedOp();
@@ -183,7 +183,7 @@ namespace TP_RestaurantReviewApp.Controllers
             if (user != null)
             {
                 string subject = "Your Forgotten Username";
-                string body = $"Dear {user.FirstName},\n\nYour username is: {user.Username}\n\nIf you didn't request this, please ignore this email.";
+                string body = "Dear " + user.FirstName + ", \n\n Your username is: " + user.Username + " \n\n If you didn't request this, please ignore this email.";
 
                 Email emailSender = new Email();
                 emailSender.SendMail(user.Email, "support@forkscore.com", subject, body);
@@ -205,7 +205,7 @@ namespace TP_RestaurantReviewApp.Controllers
             return View();
         }
 
-        [HttpPost()]
+        [HttpPost]
         public IActionResult ForgotPassword(string email)
         {
             GetUserByEmailOp getUserByEmailOp = new GetUserByEmailOp();
@@ -213,60 +213,92 @@ namespace TP_RestaurantReviewApp.Controllers
 
             if (user != null)
             {
-                string token = Guid.NewGuid().ToString();
-                TempData["ResetToken"] = token;
-                TempData["UserID"] = user.UserID;
+                Random random = new Random();
+                int[] securityRecordIds = new[] { user.SecurityRecord1, user.SecurityRecord2, user.SecurityRecord3 };
+                int selectedSecurityRecordId = securityRecordIds[random.Next(0, 3)];
 
-                string resetLink = Url.Action("ResetPassword", "Account", new { token = token }, protocol: Request.Scheme);
-                string subject = "Password Reset Request";
-                string body = $"Dear {user.FirstName},\n\nTo reset your password, click on the link below:\n{resetLink}\n\nIf you didn't request this, please ignore this email.";
+                HttpContext.Session.SetInt32("SecurityRecordID", selectedSecurityRecordId);
+                HttpContext.Session.SetInt32("UserID", user.UserID);
 
-                Email emailSender = new Email();
-                emailSender.SendMail(user.Email, "support@forkscore.com", subject, body);
-
-                TempData["Message"] = "A password reset link has been sent to your email.";
-                return RedirectToAction("Login");
+                return RedirectToAction("AnswerSecurityQuestion");
             }
-            else
+
+            ModelState.AddModelError("", "Email not found.");
+            return View();
+        }
+
+        [HttpGet]
+        public IActionResult AnswerSecurityQuestion()
+        {
+            int recordID = (int)HttpContext.Session.GetInt32("SecurityRecordID");
+            if (recordID == null) return RedirectToAction("ForgotPassword");
+
+            GetSecurityRecordByIDOp getSQOp = new GetSecurityRecordByIDOp();
+            SecurutyQuestionForUser sqForUser = getSQOp.GetSecurityRecordByID(recordID);
+
+            GetSecurityQuestionByIDOp getQuestionOp = new GetSecurityQuestionByIDOp();
+            SecurityQuestion question = getQuestionOp.GetSecurityQuestionByID(sqForUser.SecurityQuestionID);
+
+            ViewBag.SecurityQuestion = question.QuestionText;
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult AnswerSecurityQuestion(string answer)
+        {
+            int recordID = (int)HttpContext.Session.GetInt32("SecurityRecordID");
+            int userID = (int)HttpContext.Session.GetInt32("UserID");
+
+            if (recordID == null || userID == null)
+                return RedirectToAction("ForgotPassword");
+
+            GetSecurityRecordByIDOp getSQOp = new GetSecurityRecordByIDOp();
+            SecurutyQuestionForUser sqForUser = getSQOp.GetSecurityRecordByID(recordID);
+
+            if (sqForUser.HashedAnswer.Equals(answer, StringComparison.OrdinalIgnoreCase))
             {
-                ModelState.AddModelError("", "Email not found.");
+                return RedirectToAction("ResetPassword");
             }
+
+            ModelState.AddModelError("", "Incorrect answer. Please try again.");
+            
+            GetSecurityQuestionByIDOp getQuestionOp = new GetSecurityQuestionByIDOp();
+            SecurityQuestion question = getQuestionOp.GetSecurityQuestionByID(sqForUser.SecurityQuestionID);
+            ViewBag.SecurityQuestion = question.QuestionText;
 
             return View();
         }
 
-        [HttpGet()]
-        public IActionResult ResetPassword(string token)
+        [HttpGet]
+        public IActionResult ResetPassword()
         {
-            if (token == TempData["ResetToken"]?.ToString())
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult ResetPassword(string newPassword, string confirmPassword)
+        {
+            int userID = (int)HttpContext.Session.GetInt32("UserID");
+            if (userID == null)
             {
+                TempData["Message"] = "Session expired or invalid access.";
+                return RedirectToAction("Login");
+            }
+
+            if (newPassword != confirmPassword)
+            {
+                ModelState.AddModelError("", "Passwords do not match.");
                 return View();
             }
-            else
-            {
-                TempData["Message"] = "Invalid or expired reset token.";
-                return RedirectToAction("Login");
-            }
+
+            UpdateUserPasswordOp updateUserPasswordOp = new UpdateUserPasswordOp();
+            updateUserPasswordOp.UpdateUserPassword(userID, newPassword);
+
+            TempData["Message"] = "Your password has been reset successfully.";
+            return RedirectToAction("Login");
         }
 
-        [HttpPost()]
-        public IActionResult ResetPassword(string token, string newPassword)
-        {
-            if (token == TempData["ResetToken"]?.ToString())
-            {
-                int userID = (int)TempData["UserID"];
-                UpdateUserPasswordOp updateUserPasswordOp = new UpdateUserPasswordOp();
-                updateUserPasswordOp.UpdateUserPassword(userID, newPassword);
 
-                TempData["Message"] = "Your password has been reset successfully.";
-                return RedirectToAction("Login");
-            }
-            else
-            {
-                TempData["Message"] = "Invalid or expired reset token.";
-                return RedirectToAction("Login");
-            }
-        }
 
         [HttpGet]
         public IActionResult Logout()
